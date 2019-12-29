@@ -44,6 +44,11 @@ public class FormLayout extends LinearLayout {
         }
     }
 
+    //设置验证码显示
+    public void setVisibility() {
+        viewHolder.ll_code.setVisibility(VISIBLE);
+    }
+
     //提示
     private void HelloToast(String text) {
         Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
