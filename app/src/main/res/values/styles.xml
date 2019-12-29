@@ -7,5 +7,29 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
+    <!--    去除标题栏-->
+    <style name="NoTitleBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimaryDark">@color/colorPrimaryDark1</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+    <!--    沉浸式状态栏-->
+    <style name="NoBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark1</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:clipToPadding">false</item>
+    </style>
+    <!--    <style name="NoTitleBar" parent="Theme.AppCompat.Light.DarkActionBar">-->
+    <!--        <item name="colorPrimaryDark">@color/colorPrimaryDark1</item>-->
+    <!--        &lt;!&ndash;                AppCompatActivity中不需要android:&ndash;&gt;-->
+    <!--        <item name="windowActionBar">false</item>-->
+    <!--        <item name="windowNoTitle">true</item>-->
+    <!--        <item name="android:windowFullscreen">true</item>-->
+    <!--        &lt;!&ndash;                Activity中需要android:&ndash;&gt;-->
+    <!--        &lt;!&ndash;        <item name="android:windowActionBar">false</item>&ndash;&gt;-->
+    <!--        &lt;!&ndash;        <item name="android:windowNoTitle">true</item>&ndash;&gt;-->
+    <!--    </style>-->
 </resources>
