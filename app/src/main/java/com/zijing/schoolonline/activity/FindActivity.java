@@ -26,7 +26,7 @@ public class FindActivity extends AppCompatActivity implements View.OnClickListe
         btn_find = (Button) findViewById(R.id.btn_find);
 
         btn_find.setOnClickListener(this);
-//        fl_form.setVisibility();
+        fl_form.showCode(true);
     }
 
     @Override

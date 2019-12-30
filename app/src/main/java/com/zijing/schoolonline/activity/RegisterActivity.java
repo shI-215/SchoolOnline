@@ -29,7 +29,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         cb_box = (CheckBox) findViewById(R.id.cb_box);
 
         btn_register.setOnClickListener(this);
-//        fl_form.setVisibility();
+        fl_form.showCode(true);
     }
 
     @Override

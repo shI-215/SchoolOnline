@@ -15,28 +15,34 @@ import androidx.annotation.Nullable;
 import com.zijing.schoolonline.R;
 
 public class FormLayout extends LinearLayout {
-    private ViewHolder viewHolder;
+    private Context context;
+    private EditText edt_phone;
+    private EditText edt_pwd;
+    private EditText edt_code;
+    private TextView tv_get;
+    private LinearLayout ll_code;
 
     public FormLayout(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.form_layout, this);
+        this.context = context;
     }
 
     //提交
     public void submit() {
-        String phone = viewHolder.edt_phone.getText().toString();
+        String phone = edt_phone.getText().toString();
         if (TextUtils.isEmpty(phone)) {
             HelloToast("电话不能为空");
             return;
         }
-        String password = viewHolder.edt_pwd.getText().toString();
+        String password = edt_pwd.getText().toString();
         if (TextUtils.isEmpty(password)) {
             HelloToast("密码不能为空");
             return;
         }
         //判断获取验证码是否可见
-        if (viewHolder.ll_code.getVisibility() == View.VISIBLE) {
-            String code = viewHolder.edt_code.getText().toString();
+        if (ll_code.getVisibility() == View.VISIBLE) {
+            String code = edt_code.getText().toString();
             if (TextUtils.isEmpty(code)) {
                 HelloToast("验证码不能为空");
                 return;
@@ -45,31 +51,22 @@ public class FormLayout extends LinearLayout {
     }
 
     //设置验证码显示
-    public void setVisibility() {
-        viewHolder.ll_code.setVisibility(VISIBLE);
+    public FormLayout showCode(boolean isGetCode) {
+        init();
+        if (isGetCode == true) ll_code.setVisibility(VISIBLE);
+        return this;
+    }
+
+    private void init() {
+        edt_phone = (EditText) findViewById(R.id.edt_phone);
+        edt_pwd = (EditText) findViewById(R.id.edt_pwd);
+        edt_code = (EditText) findViewById(R.id.edt_code);
+        tv_get = (TextView) findViewById(R.id.tv_get);
+        ll_code = (LinearLayout) findViewById(R.id.ll_code);
     }
 
     //提示
     private void HelloToast(String text) {
         Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
-    }
-
-    public static
-    class ViewHolder {
-        public View rootView;
-        public EditText edt_phone;
-        public EditText edt_pwd;
-        public EditText edt_code;
-        public TextView tv_get;
-        public LinearLayout ll_code;
-
-        public ViewHolder(View rootView) {
-            this.rootView = rootView;
-            this.edt_phone = (EditText) rootView.findViewById(R.id.edt_phone);
-            this.edt_pwd = (EditText) rootView.findViewById(R.id.edt_pwd);
-            this.edt_code = (EditText) rootView.findViewById(R.id.edt_code);
-            this.tv_get = (TextView) rootView.findViewById(R.id.tv_get);
-            this.ll_code = (LinearLayout) rootView.findViewById(R.id.ll_code);
-        }
     }
 }
