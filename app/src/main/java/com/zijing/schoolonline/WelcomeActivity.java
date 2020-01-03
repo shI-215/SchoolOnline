@@ -26,7 +26,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     //倒计时务
-    private CountDownTimer countDownTimer = new CountDownTimer(6000, 1000) {
+    private CountDownTimer countDownTimer = new CountDownTimer(1000, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
             tv_timer.setText(millisUntilFinished / 1000 + "");
