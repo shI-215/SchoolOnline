@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".activity.RechargeActivity">
 
-    <com.zijing.schoolonline.view.InfoLayout
+    <com.zijing.schoolonline.layout.InfoLayout
         android:id="@+id/il_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

@@ -9,7 +9,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.zijing.schoolonline.R;
-import com.zijing.schoolonline.view.CardLayout;
+import com.zijing.schoolonline.layout.CardLayout;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context;

@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/round" />
+            android:src="@drawable/picture" />
 
         <TextView
             android:id="@+id/tv_user_name"
@@ -35,18 +35,18 @@
             android:text="走自己的路，让别人去说吧！" />
     </RelativeLayout>
 
-    <com.zijing.schoolonline.view.ClickLayout
+    <com.zijing.schoolonline.layout.ClickLayout
         android:id="@+id/cl_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp" />
 
-    <com.zijing.schoolonline.view.ClickLayout
+    <com.zijing.schoolonline.layout.ClickLayout
         android:id="@+id/cl_birthday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.zijing.schoolonline.view.ClickLayout
+    <com.zijing.schoolonline.layout.ClickLayout
         android:id="@+id/cl_room"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

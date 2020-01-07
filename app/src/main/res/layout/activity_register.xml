@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/register_page"
     tools:context=".activity.RegisterActivity">
 
     <androidx.cardview.widget.CardView
@@ -22,7 +21,7 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <com.zijing.schoolonline.view.FormLayout
+            <com.zijing.schoolonline.layout.FormLayout
                 android:id="@+id/fl_form"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

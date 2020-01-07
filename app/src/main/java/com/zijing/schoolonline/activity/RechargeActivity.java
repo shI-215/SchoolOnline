@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.zijing.schoolonline.R;
 import com.zijing.schoolonline.adapter.RechargeAdapter;
-import com.zijing.schoolonline.view.InfoLayout;
+import com.zijing.schoolonline.layout.InfoLayout;
 
 import java.util.ArrayList;
 import java.util.List;

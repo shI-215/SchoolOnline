@@ -8,7 +8,7 @@ import android.widget.CheckBox;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.zijing.schoolonline.R;
-import com.zijing.schoolonline.view.FormLayout;
+import com.zijing.schoolonline.layout.FormLayout;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 

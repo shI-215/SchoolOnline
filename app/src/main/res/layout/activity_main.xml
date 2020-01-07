@@ -4,23 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_page"
     android:orientation="vertical"
     tools:context=".activity.MainActivity">
 
-    <com.zijing.schoolonline.view.CardLayout
+    <com.zijing.schoolonline.layout.CardLayout
         android:id="@+id/cl_air"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp" />
 
-    <com.zijing.schoolonline.view.CardLayout
+    <com.zijing.schoolonline.layout.CardLayout
         android:id="@+id/cl_elect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp" />
 
-    <com.zijing.schoolonline.view.CardLayout
+    <com.zijing.schoolonline.layout.CardLayout
         android:id="@+id/cl_water"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

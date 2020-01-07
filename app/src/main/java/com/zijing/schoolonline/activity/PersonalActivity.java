@@ -7,7 +7,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.zijing.schoolonline.R;
-import com.zijing.schoolonline.view.ClickLayout;
+import com.zijing.schoolonline.layout.ClickLayout;
 
 public class PersonalActivity extends AppCompatActivity {
 
