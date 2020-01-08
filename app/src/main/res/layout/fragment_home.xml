@@ -4,27 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
     android:orientation="vertical"
-    android:padding="20dp"
-    tools:context=".activity.RechargeActivity">
+    tools:context=".activity.HomeFragment">
 
-    <com.zijing.schoolonline.layout.InfoLayout
-        android:id="@+id/il_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_recharge"
+    <com.zijing.schoolonline.layout.CardLayout
+        android:id="@+id/cl_air"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff" />
+        android:layout_margin="10dp" />
 
-    <Button
-        android:id="@+id/btn_recharge"
+    <com.zijing.schoolonline.layout.CardLayout
+        android:id="@+id/cl_elect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="充值"
-        android:textSize="20sp" />
+        android:layout_margin="10dp" />
+
+    <com.zijing.schoolonline.layout.CardLayout
+        android:id="@+id/cl_water"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp" />
 </LinearLayout>

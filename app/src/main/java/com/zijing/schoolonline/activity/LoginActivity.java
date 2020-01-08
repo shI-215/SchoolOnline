@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.zijing.schoolonline.MainActivity;
 import com.zijing.schoolonline.R;
 import com.zijing.schoolonline.bean.User;
 import com.zijing.schoolonline.presenter.UserPresenter;
@@ -53,10 +54,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
-                submit();
+//                submit();
+                startActivity(new Intent(context, MainActivity.class));
                 break;
             case R.id.tv_find:
-                startActivity(new Intent(context, FindActivity.class));
+                startActivity(new Intent(context, NextActivity.class));
                 break;
             case R.id.tv_register:
                 startActivity(new Intent(context, RegisterActivity.class));
@@ -87,6 +89,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void showSuccess(User user) {
         Toast.makeText(context, "登录成功，用户：" + user.getName(), Toast.LENGTH_SHORT).show();
         startActivity(new Intent(context, MainActivity.class));
+        finish();
     }
 
     @Override

@@ -10,7 +10,7 @@ public class UserModel {
     boolean isSuccess = false;
 
     public void userLoginData(String phone, String password, UCallBack uCallBack) {
-        if (phone.equals("13456789022") && password.equals("12345678900")) {
+        if (phone.equals("17752839142") && password.equals("12345678900")) {
             isSuccess = true;
         }
         if (isSuccess) {

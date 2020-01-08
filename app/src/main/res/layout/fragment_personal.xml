@@ -5,17 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.PersonalActivity">
+    tools:context=".activity.PersonalFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/iv_user_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_margin="5dp"
             android:src="@drawable/picture" />
 
         <TextView
@@ -58,5 +60,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="18dp"
         android:text="退出登录"
+        android:textColor="#fff"
         android:textSize="25sp" />
 </LinearLayout>
