@@ -44,12 +44,18 @@
         android:layout_marginTop="10dp" />
 
     <com.zijing.schoolonline.layout.ClickLayout
-        android:id="@+id/cl_birthday"
+        android:id="@+id/cl_room"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" />
+
+    <com.zijing.schoolonline.layout.ClickLayout
+        android:id="@+id/cl_version"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <com.zijing.schoolonline.layout.ClickLayout
-        android:id="@+id/cl_room"
+        android:id="@+id/cl_version_update"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp" />

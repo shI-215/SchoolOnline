@@ -1,6 +1,7 @@
 package com.zijing.schoolonline.layout;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
@@ -21,10 +22,11 @@ public class ClickLayout extends RelativeLayout {
         this.context = context;
     }
 
-    public ClickLayout setText(String tag, String content, boolean isShow) {
+    public ClickLayout setText(String tag, String content, int contentColor, boolean isShow) {
         init();
         tv_tag.setText(tag);
         tv_content.setText(content);
+        if (contentColor == 1) tv_content.setTextColor(Color.BLUE);
         if (isShow == false) iv_next.setVisibility(GONE);
         return this;
     }

@@ -7,7 +7,7 @@
     android:background="#fff"
     android:orientation="vertical"
     android:padding="30dp"
-    tools:context=".activity.FindActivity">
+    tools:context=".activity.FinishActivity">
 
 
     <TextView

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_air_record"
+        android:title="空调充值记录" />
+    <item
+        android:id="@+id/item_elect_record"
+        android:title="电费充值记录" />
+    <item
+        android:id="@+id/item_water_record"
+        android:title="水费充值记录" />
+</menu>

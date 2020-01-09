@@ -15,6 +15,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static AppCompatActivity compatActivity;
     private List<Fragment> mFragments;
 
     private ViewPager vp_main_page;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        compatActivity = this;
         initView();
     }
 

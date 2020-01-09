@@ -56,12 +56,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btn_login:
 //                submit();
                 startActivity(new Intent(context, MainActivity.class));
+                finish();
                 break;
             case R.id.tv_find:
-                startActivity(new Intent(context, NextActivity.class));
+                Intent intent = new Intent();
+                intent.putExtra("titleType", 2);
+                intent.setClass(context, NextActivity.class);
+                startActivity(intent);
                 break;
             case R.id.tv_register:
-                startActivity(new Intent(context, RegisterActivity.class));
+                Intent intent2 = new Intent();
+                intent2.putExtra("titleType", 1);
+                intent2.setClass(context, NextActivity.class);
+                startActivity(intent2);
                 break;
         }
     }

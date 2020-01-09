@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.zijing.schoolonline.ApplicationParam;
 import com.zijing.schoolonline.R;
 import com.zijing.schoolonline.adapter.RechargeAdapter;
 import com.zijing.schoolonline.layout.InfoLayout;
@@ -24,6 +25,7 @@ public class RechargeActivity extends AppCompatActivity implements View.OnClickL
     private RechargeAdapter rechargeAdapter;
     private int index;
     private int[] money;
+    private int titleRecharge;
 
     private InfoLayout il_info;
     private RecyclerView rv_recharge;
@@ -33,12 +35,21 @@ public class RechargeActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recharge);
+        titleRecharge = getIntent().getIntExtra("titleRecharge", 0);
+        if (titleRecharge == 1) {
+            setTitle(ApplicationParam.AIR_RECHARGE_VALUE);
+        } else if (titleRecharge == 2) {
+            setTitle(ApplicationParam.ELECT_RECHARGE_VALUE);
+        } else if (titleRecharge == 3) {
+            setTitle(ApplicationParam.WATER_RECHARGE_VALUE);
+        }
         initView();
         context = this;
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         rv_recharge.setLayoutManager(layoutManager);
         rechargeAdapter = new RechargeAdapter(list);
         rv_recharge.setAdapter(rechargeAdapter);
+
     }
 
     private void initView() {

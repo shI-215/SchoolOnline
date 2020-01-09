@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,13 +15,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.zijing.schoolonline.ApplicationParam;
 import com.zijing.schoolonline.R;
 import com.zijing.schoolonline.util.RegexUtil;
 
-public class FindActivity extends AppCompatActivity implements View.OnClickListener {
+public class FinishActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Context context;
     private String phone;
+    private int titleType;
 
     private TextView tv_phone;
     private EditText edt_pwd;
@@ -29,9 +32,16 @@ public class FindActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find);
-        context = this;
+        setContentView(R.layout.activity_finish);
+        titleType = getIntent().getIntExtra("titleType", 0);
+        Log.v("FinishActivity", titleType + "");
         phone = getIntent().getStringExtra("phone");
+        if (titleType == 1) {
+            setTitle(ApplicationParam.REGISTER_VALUE);
+        } else if (titleType == 2) {
+            setTitle(ApplicationParam.FINDV_ALUE);
+        }
+        context = this;
         initView();
     }
 
@@ -77,7 +87,7 @@ public class FindActivity extends AppCompatActivity implements View.OnClickListe
         // validate
         String pwd = edt_pwd.getText().toString().trim();
         if (TextUtils.isEmpty(pwd)) {
-            Toast.makeText(this, "密码", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "密码不能为空", Toast.LENGTH_SHORT).show();
             return;
         } else {
             if (!RegexUtil.regPassword(pwd)) {
@@ -89,5 +99,11 @@ public class FindActivity extends AppCompatActivity implements View.OnClickListe
 
         startActivity(new Intent(context, LoginActivity.class));
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        NextActivity.activity.finish();
     }
 }

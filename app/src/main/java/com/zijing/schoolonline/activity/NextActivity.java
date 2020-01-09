@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.zijing.schoolonline.ApplicationParam;
 import com.zijing.schoolonline.R;
 import com.zijing.schoolonline.util.RegexUtil;
 
@@ -27,9 +28,11 @@ import cn.smssdk.SMSSDK;
 
 public class NextActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public static AppCompatActivity activity;
     private Context context;
     private String country = "86";
     private String phone;
+    private int titleType;
 
     private EditText edt_phone;
     private EditText edt_code;
@@ -40,8 +43,15 @@ public class NextActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next);
+        titleType = getIntent().getIntExtra("titleType", 0);
+        if (titleType == 1) {
+            setTitle(ApplicationParam.REGISTER_VALUE);
+        } else if (titleType == 2) {
+            setTitle(ApplicationParam.FINDV_ALUE);
+        }
         // 注册一个事件回调，用于处理SMSSDK接口请求的结果
         SMSSDK.registerEventHandler(eventHandler);
+        activity = this;
         context = this;
         initView();
     }
@@ -182,7 +192,8 @@ public class NextActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(NextActivity.this, "验证成功", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent();
                     intent.putExtra("phone", phone);
-                    intent.setClass(context, FindActivity.class);
+                    intent.putExtra("titleType", titleType);
+                    intent.setClass(context, FinishActivity.class);
                     startActivity(intent);
                     break;
                 case 3:
