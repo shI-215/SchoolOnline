@@ -15,12 +15,12 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/tv_content"
+        android:id="@+id/tv_left_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/tv_tag"
-        android:text="12345678900"
+        android:text="123"
         android:textSize="20sp" />
 
     <ImageView
@@ -31,4 +31,14 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="20dp"
         android:src="@drawable/next" />
+
+    <TextView
+        android:id="@+id/tv_right_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@id/iv_next"
+        android:text="12345678900"
+        android:textSize="20sp" />
 </RelativeLayout>

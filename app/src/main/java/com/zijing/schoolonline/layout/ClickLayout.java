@@ -11,29 +11,31 @@ import android.widget.TextView;
 import com.zijing.schoolonline.R;
 
 public class ClickLayout extends RelativeLayout {
-    private Context context;
+
     private TextView tv_tag;
-    private TextView tv_content;
     private ImageView iv_next;
+    private TextView tv_left_content;
+    private TextView tv_right_content;
 
     public ClickLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.click_layout, this);
-        this.context = context;
     }
 
-    public ClickLayout setText(String tag, String content, int contentColor, boolean isShow) {
+    public ClickLayout setText(String tag, String left_content, String right_content, int contentColor, boolean isShow) {
         init();
         tv_tag.setText(tag);
-        tv_content.setText(content);
-        if (contentColor == 1) tv_content.setTextColor(Color.BLUE);
+        tv_left_content.setText(left_content);
+        tv_right_content.setText(right_content);
+        if (contentColor == 1) tv_left_content.setTextColor(Color.BLUE);
         if (isShow == false) iv_next.setVisibility(GONE);
         return this;
     }
 
     private void init() {
         tv_tag = (TextView) findViewById(R.id.tv_tag);
-        tv_content = (TextView) findViewById(R.id.tv_content);
+        tv_left_content = (TextView) findViewById(R.id.tv_left_content);
+        tv_right_content = (TextView) findViewById(R.id.tv_right_content);
         iv_next = (ImageView) findViewById(R.id.iv_next);
     }
 }

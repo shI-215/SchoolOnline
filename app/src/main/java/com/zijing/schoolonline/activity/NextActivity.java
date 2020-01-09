@@ -10,6 +10,7 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.zijing.schoolonline.ApplicationParam;
@@ -33,6 +35,7 @@ public class NextActivity extends AppCompatActivity implements View.OnClickListe
     private String country = "86";
     private String phone;
     private int titleType;
+    private int updatePhone;
 
     private EditText edt_phone;
     private EditText edt_code;
@@ -43,7 +46,13 @@ public class NextActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         titleType = getIntent().getIntExtra("titleType", 0);
+        updatePhone = getIntent().getIntExtra("updatePhone", 0);
         if (titleType == 1) {
             setTitle(ApplicationParam.REGISTER_VALUE);
         } else if (titleType == 2) {
@@ -166,6 +175,7 @@ public class NextActivity extends AppCompatActivity implements View.OnClickListe
                             handler.sendEmptyMessage(2);
                         } else {
                             // TODO 处理错误的结果
+                            handler.sendEmptyMessage(4);
                             ((Throwable) data).printStackTrace();
                         }
                     }
@@ -189,15 +199,22 @@ public class NextActivity extends AppCompatActivity implements View.OnClickListe
                     countDownTimer.start();
                     break;
                 case 2:
-                    Toast.makeText(NextActivity.this, "验证成功", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent();
-                    intent.putExtra("phone", phone);
-                    intent.putExtra("titleType", titleType);
-                    intent.setClass(context, FinishActivity.class);
-                    startActivity(intent);
+                    if (updatePhone != 0) {
+                        Toast.makeText(NextActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        Intent intent = new Intent();
+                        intent.putExtra("phone", phone);
+                        intent.putExtra("titleType", titleType);
+                        intent.setClass(context, FinishActivity.class);
+                        startActivity(intent);
+                    }
                     break;
                 case 3:
                     Toast.makeText(NextActivity.this, "操作频繁，请稍后再试", Toast.LENGTH_SHORT).show();
+                    break;
+                case 4:
+                    Toast.makeText(NextActivity.this, "验证码错误", Toast.LENGTH_SHORT).show();
                     break;
             }
         }
@@ -217,6 +234,16 @@ public class NextActivity extends AppCompatActivity implements View.OnClickListe
             tv_get.setClickable(true);
         }
     };
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish(); // back button
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onDestroy() {

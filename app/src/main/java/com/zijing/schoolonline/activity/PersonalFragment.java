@@ -53,24 +53,30 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
         cl_version_update = (ClickLayout) getActivity().findViewById(R.id.cl_version_update);
         btn_unlogin = (Button) getActivity().findViewById(R.id.btn_unlogin);
 
-        cl_phone.setText("联系电话", "12345678900", 0, true);
+        cl_phone.setText("电话", "12345678900", "", 0, true);
+        cl_phone.setOnClickListener(this);
         if (TextUtils.isEmpty(roomInfo)) {
-            cl_room.setText("宿舍信息", "未绑定宿舍", 1, true);
+            cl_room.setText("宿舍", "未绑定宿舍", "", 1, true);
             cl_room.setClickable(true);
         } else {
-            cl_room.setText("宿舍信息", roomInfo, 0, false);
+            cl_room.setText("宿舍", roomInfo, "", 0, false);
             cl_room.setClickable(false);
         }
-
         String versionName = VersionCodeUtil.getVerName(getContext());
-        cl_version.setText("版本信息", versionName, 0, false);
-        cl_version_update.setText("检查更新", "", 0, false);
+        cl_version.setText("版本", versionName, "", 0, false);
+        cl_version_update.setText("检查更新", "", "", 0, false);
         btn_unlogin.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.cl_phone:
+                Intent intent = new Intent();
+                intent.setClass(getContext(), NextActivity.class);
+                intent.putExtra("updatePhone", 1);
+                startActivity(intent);
+                break;
             case R.id.btn_unlogin:
                 startActivity(new Intent(getContext(), LoginActivity.class));
                 MainActivity.compatActivity.finish();

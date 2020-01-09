@@ -6,13 +6,14 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.zijing.schoolonline.ApplicationParam;
@@ -33,8 +34,12 @@ public class FinishActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finish);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         titleType = getIntent().getIntExtra("titleType", 0);
-        Log.v("FinishActivity", titleType + "");
         phone = getIntent().getStringExtra("phone");
         if (titleType == 1) {
             setTitle(ApplicationParam.REGISTER_VALUE);
@@ -98,12 +103,17 @@ public class FinishActivity extends AppCompatActivity implements View.OnClickLis
         // TODO validate success, do something
 
         startActivity(new Intent(context, LoginActivity.class));
+        NextActivity.activity.finish();
         finish();
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        NextActivity.activity.finish();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish(); // back button
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
