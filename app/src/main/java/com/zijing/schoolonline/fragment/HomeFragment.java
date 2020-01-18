@@ -1,4 +1,4 @@
-package com.zijing.schoolonline.activity;
+package com.zijing.schoolonline.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.zijing.schoolonline.R;
+import com.zijing.schoolonline.activity.RechargeActivity;
+import com.zijing.schoolonline.activity.RecordActivity;
 import com.zijing.schoolonline.layout.CardLayout;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {

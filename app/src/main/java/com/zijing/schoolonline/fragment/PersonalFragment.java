@@ -1,4 +1,4 @@
-package com.zijing.schoolonline.activity;
+package com.zijing.schoolonline.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 
 import com.zijing.schoolonline.MainActivity;
 import com.zijing.schoolonline.R;
+import com.zijing.schoolonline.activity.LoginActivity;
+import com.zijing.schoolonline.activity.NextActivity;
 import com.zijing.schoolonline.layout.ClickLayout;
 import com.zijing.schoolonline.util.VersionCodeUtil;
 

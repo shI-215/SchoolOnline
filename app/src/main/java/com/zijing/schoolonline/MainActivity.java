@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import com.zijing.schoolonline.activity.HomeFragment;
-import com.zijing.schoolonline.activity.PersonalFragment;
+import com.zijing.schoolonline.fragment.HomeFragment;
+import com.zijing.schoolonline.fragment.PersonalFragment;
 import com.zijing.schoolonline.adapter.MainAdapter;
 
 import java.util.ArrayList;
