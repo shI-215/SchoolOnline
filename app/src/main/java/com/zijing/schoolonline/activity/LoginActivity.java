@@ -16,9 +16,11 @@ import com.zijing.schoolonline.MainActivity;
 import com.zijing.schoolonline.R;
 import com.zijing.schoolonline.bean.User;
 import com.zijing.schoolonline.presenter.UserPresenter;
-import com.zijing.schoolonline.view.UserView;
+import com.zijing.schoolonline.presenter.UserPresenterImpl;
+import com.zijing.schoolonline.util.SharedPreferencesUtil;
+import com.zijing.schoolonline.view.LoginView;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, UserView {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, LoginView {
 
     private Context context;
     private UserPresenter userPresenter;
@@ -34,7 +36,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         context = this;
-        userPresenter = new UserPresenter(this);
+        userPresenter = new UserPresenterImpl(this);
         initView();
     }
 
@@ -54,9 +56,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
-//                submit();
-                startActivity(new Intent(context, MainActivity.class));
-                finish();
+                submit();
                 break;
             case R.id.tv_find:
                 Intent intent = new Intent();
@@ -93,14 +93,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    public void showSuccess(User user) {
-        Toast.makeText(context, "登录成功，用户：" + user.getName(), Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(context, MainActivity.class));
+    public void onSuccess(User user) {
+        SharedPreferencesUtil.put(context, "userId", user.getUserId());
+        SharedPreferencesUtil.put(context, "userPhone", user.getUserPhone());
+        SharedPreferencesUtil.put(context, "userName", user.getUserName());
+        SharedPreferencesUtil.put(context, "userAutograph", user.getUserAutograph());
+
+        SharedPreferencesUtil.put(context, "waterId", user.getWater().getWaterId());
+        SharedPreferencesUtil.put(context, "roomId", user.getRoom().getRoomId());
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
         finish();
     }
 
     @Override
-    public void showFaile() {
+    public void onFailed() {
         Toast.makeText(context, "登录失败，用户名或者密码错误！！", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        userPresenter.onDestroy();
+        super.onDestroy();
     }
 }

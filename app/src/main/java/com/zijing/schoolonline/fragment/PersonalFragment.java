@@ -18,6 +18,7 @@ import com.zijing.schoolonline.R;
 import com.zijing.schoolonline.activity.LoginActivity;
 import com.zijing.schoolonline.activity.NextActivity;
 import com.zijing.schoolonline.layout.ClickLayout;
+import com.zijing.schoolonline.util.SharedPreferencesUtil;
 import com.zijing.schoolonline.util.VersionCodeUtil;
 
 public class PersonalFragment extends Fragment implements View.OnClickListener {
@@ -55,8 +56,10 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
         cl_version_update = (ClickLayout) getActivity().findViewById(R.id.cl_version_update);
         btn_unlogin = (Button) getActivity().findViewById(R.id.btn_unlogin);
 
-        cl_phone.setText("电话", "12345678900", "", 0, true);
+        tv_user_name.setText((String) SharedPreferencesUtil.get(getActivity(), "userName", "紫荆科技"));
+        cl_phone.setText("电话", (String) SharedPreferencesUtil.get(getActivity(), "userPhone", "12345678900"), "", 0, true);
         cl_phone.setOnClickListener(this);
+        tv_user_signature.setText((String) SharedPreferencesUtil.get(getActivity(), "userAutograph", "走自己的路，让别人去说吧。"));
         if (TextUtils.isEmpty(roomInfo)) {
             cl_room.setText("宿舍", "未绑定宿舍", "", 1, true);
             cl_room.setClickable(true);
