@@ -93,14 +93,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    public void onSuccess(User user) {
-        SharedPreferencesUtil.put(context, "userId", user.getUserId());
-        SharedPreferencesUtil.put(context, "userPhone", user.getUserPhone());
-        SharedPreferencesUtil.put(context, "userName", user.getUserName());
-        SharedPreferencesUtil.put(context, "userAutograph", user.getUserAutograph());
-
-        SharedPreferencesUtil.put(context, "waterId", user.getWater().getWaterId());
-        SharedPreferencesUtil.put(context, "roomId", user.getRoom().getRoomId());
+    public void onSuccess(final User user) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferencesUtil.put(context, "userId", user.getUserId());
+                SharedPreferencesUtil.put(context, "userPhone", user.getUserPhone());
+                SharedPreferencesUtil.put(context, "userName", user.getUserName());
+                SharedPreferencesUtil.put(context, "userAutograph", user.getUserAutograph());
+                if (user.getWater() != null) {
+                    SharedPreferencesUtil.put(context, "waterId", user.getWater().getWaterId());
+                } else {
+                    SharedPreferencesUtil.put(context, "waterId", 0);
+                }
+                if (user.getRoom() != null) {
+                    SharedPreferencesUtil.put(context, "roomId", user.getRoom().getRoomId());
+                } else {
+                    SharedPreferencesUtil.put(context, "roomId", 0);
+                }
+            }
+        }).start();
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
         finish();
     }

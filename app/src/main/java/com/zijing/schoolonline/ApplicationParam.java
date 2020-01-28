@@ -1,7 +1,6 @@
 package com.zijing.schoolonline;
 
 import android.app.Application;
-import android.content.Context;
 
 public class ApplicationParam extends Application {
 
@@ -18,18 +17,20 @@ public class ApplicationParam extends Application {
 
     //    URL
     public static final String SCHOOL_URL = "http://192.168.43.196:8080/School";
+    //    用户
     public static final String USER_LOGIN_API = SCHOOL_URL + "/user/userLogin";
     public static final String USER_REGISTER_API = SCHOOL_URL + "/user/userRegister";
     public static final String USER_FIND_API = SCHOOL_URL + "/user/userFind";
     public static final String USER_LOGOUT_API = SCHOOL_URL + "/user/userLogOut";
     public static final String USER_GETUSER_API = SCHOOL_URL + "/user/getUser";
-
-    private static ApplicationParam mInstance;
-
-    public static Context getInstance() {
-        if (mInstance == null) {
-            mInstance = new ApplicationParam();
-        }
-        return mInstance;
-    }
+    public static final String USER_BINDINGROOM_API = SCHOOL_URL + "/user/bindingRoom";
+    //    宿舍
+    public static final String ROOM_GETAREA_API = SCHOOL_URL + "/room/selectRoomArea";
+    public static final String ROOM_GETDOORPLATE_API = SCHOOL_URL + "/room/selectRoomDoorplate";
+    //水费
+    public static final String WATER_RECHARGE_API = SCHOOL_URL + "/water/rechargeWaterMoney";
+    //电费
+    public static final String ELECT_RECHARGE_API = SCHOOL_URL + "/elect/rechargeElectMoney";
+    //空调费
+    public static final String AIR_RECHARGE_API = SCHOOL_URL + "/air/rechargeAirMoney";
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -18,11 +19,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.zijing.schoolonline.ApplicationParam;
 import com.zijing.schoolonline.R;
+import com.zijing.schoolonline.bean.Message;
+import com.zijing.schoolonline.presenter.RegisterPresenter;
+import com.zijing.schoolonline.presenter.RegisterPresenterImpl;
 import com.zijing.schoolonline.util.RegexUtil;
+import com.zijing.schoolonline.view.RegisterView;
 
-public class FinishActivity extends AppCompatActivity implements View.OnClickListener {
+public class FinishActivity extends AppCompatActivity implements View.OnClickListener, RegisterView {
 
+    private RegisterPresenter registerPresenter;
     private Context context;
+
     private String phone;
     private int titleType;
 
@@ -47,6 +54,7 @@ public class FinishActivity extends AppCompatActivity implements View.OnClickLis
             setTitle(ApplicationParam.FINDV_ALUE);
         }
         context = this;
+        registerPresenter = new RegisterPresenterImpl(this);
         initView();
     }
 
@@ -101,19 +109,50 @@ public class FinishActivity extends AppCompatActivity implements View.OnClickLis
             }
         }
         // TODO validate success, do something
-
-        startActivity(new Intent(context, LoginActivity.class));
-        NextActivity.activity.finish();
-        finish();
+        if (titleType == 1) {//用户注册
+            registerPresenter.userRegister(phone, pwd);
+        } else if (titleType == 2) {//找回密码
+            registerPresenter.userFind(phone, pwd);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                this.finish(); // back button
+                this.finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSuccess() {
+
+        if (titleType == 1) {//用户注册
+            Toast.makeText(context, "注册成功！", Toast.LENGTH_LONG).show();
+        } else if (titleType == 2) {//找回密码
+            Toast.makeText(context, "找回密码成功！", Toast.LENGTH_LONG).show();
+        }
+        startActivity(new Intent(context, LoginActivity.class));
+        NextActivity.activity.finish();
+        finish();
+    }
+
+    @Override
+    public void onFailed(Message message) {
+//        if (titleType == 1) {//用户注册
+//            ToastUtil.l(message.getMsg());
+//        } else if (titleType == 2) {//找回密码
+//            ToastUtil.l("找回密码成功！");
+//        }
+        Log.v("FinishActivity::::::", message.toString());
+        Toast.makeText(context, message.getData(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        registerPresenter.onDestroy();
     }
 }

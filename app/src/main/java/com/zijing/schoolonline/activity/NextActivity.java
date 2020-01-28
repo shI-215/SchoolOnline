@@ -23,15 +23,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.zijing.schoolonline.ApplicationParam;
 import com.zijing.schoolonline.R;
+import com.zijing.schoolonline.bean.User;
 import com.zijing.schoolonline.util.RegexUtil;
+import com.zijing.schoolonline.view.LoginView;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
-public class NextActivity extends AppCompatActivity implements View.OnClickListener {
+public class NextActivity extends AppCompatActivity implements View.OnClickListener, LoginView {
 
     public static AppCompatActivity activity;
     private Context context;
+
     private String country = "86";
     private String phone;
     private int titleType;
@@ -249,5 +252,15 @@ public class NextActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
         SMSSDK.unregisterEventHandler(eventHandler);
+    }
+
+    @Override
+    public void onSuccess(User user) {
+
+    }
+
+    @Override
+    public void onFailed() {
+
     }
 }

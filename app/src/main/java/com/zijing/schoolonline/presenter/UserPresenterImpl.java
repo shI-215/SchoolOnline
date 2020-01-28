@@ -24,7 +24,9 @@ public class UserPresenterImpl implements UserPresenter, UCallBack {
 
     @Override
     public void onFailed() {
-
+        if (loginView != null) {
+            loginView.onFailed();
+        }
     }
 
     @Override
