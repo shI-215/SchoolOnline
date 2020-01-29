@@ -10,29 +10,29 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zijing.schoolonline.R;
-import com.zijing.schoolonline.bean.Record;
+import com.zijing.schoolonline.bean.Recharge;
 
 import java.util.List;
 
 public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder> {
 
-    private List<Record> recordList;
+    private List<Recharge> recordList;
 
-    public RecordAdapter(List<Record> recordList) {
+    public RecordAdapter(List<Recharge> recordList) {
         this.recordList = recordList;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_id;
         TextView tv_account;
         TextView tv_amount;
+        TextView tv_type;
         TextView tv_time;
 
         public ViewHolder(View view) {
             super(view);
-            tv_id = (TextView) view.findViewById(R.id.tv_id);
             tv_account = (TextView) view.findViewById(R.id.tv_account);
             tv_amount = (TextView) view.findViewById(R.id.tv_amount);
+            tv_type = (TextView) view.findViewById(R.id.tv_type);
             tv_time = (TextView) view.findViewById(R.id.tv_time);
         }
     }
@@ -47,12 +47,12 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RecordAdapter.ViewHolder holder, int position) {
-        Record record = recordList.get(position);
-        Log.v("RecordAdapter", record.toString());
-        holder.tv_id.setText(record.getRid() + "");
-        holder.tv_account.setText(record.getAccount());
-        holder.tv_amount.setText(record.getAmount() + "");
-        holder.tv_time.setText(record.getTime());
+        Recharge recharge = recordList.get(position);
+        Log.v("RecordAdapter", recharge.toString());
+        holder.tv_account.setText(recharge.getRechargeAccount());
+        holder.tv_amount.setText("+" + recharge.getRechargeMoney());
+        holder.tv_type.setText(recharge.getRechargeType());
+        holder.tv_time.setText(recharge.getRechargeDate());
     }
 
     @Override

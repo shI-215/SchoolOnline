@@ -1,32 +1,22 @@
 package com.zijing.schoolonline.bean;
 
 public class Room {
-    private Integer roomId;
+
+    /**
+     * roomArea : 一栋
+     * roomDoorplate : 108
+     * roomId : 202001108
+     * roomPopulation : 0
+     * roomType : 4
+     * roomRemark : null
+     */
+
     private String roomArea;
-    private Integer roomDoorplate;
-    private Integer roomPopulation;
-    private Integer roomType;
+    private int roomDoorplate;
+    private int roomId;
+    private int roomPopulation;
+    private int roomType;
     private String roomRemark;
-
-    @Override
-    public String toString() {
-        return "Room{" +
-                "roomId=" + roomId +
-                ", roomArea='" + roomArea + '\'' +
-                ", roomDoorplate=" + roomDoorplate +
-                ", roomPopulation=" + roomPopulation +
-                ", roomType=" + roomType +
-                ", roomRemark='" + roomRemark + '\'' +
-                '}';
-    }
-
-    public Integer getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(Integer roomId) {
-        this.roomId = roomId;
-    }
 
     public String getRoomArea() {
         return roomArea;
@@ -36,27 +26,35 @@ public class Room {
         this.roomArea = roomArea;
     }
 
-    public Integer getRoomDoorplate() {
+    public int getRoomDoorplate() {
         return roomDoorplate;
     }
 
-    public void setRoomDoorplate(Integer roomDoorplate) {
+    public void setRoomDoorplate(int roomDoorplate) {
         this.roomDoorplate = roomDoorplate;
     }
 
-    public Integer getRoomPopulation() {
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
+
+    public int getRoomPopulation() {
         return roomPopulation;
     }
 
-    public void setRoomPopulation(Integer roomPopulation) {
+    public void setRoomPopulation(int roomPopulation) {
         this.roomPopulation = roomPopulation;
     }
 
-    public Integer getRoomType() {
+    public int getRoomType() {
         return roomType;
     }
 
-    public void setRoomType(Integer roomType) {
+    public void setRoomType(int roomType) {
         this.roomType = roomType;
     }
 

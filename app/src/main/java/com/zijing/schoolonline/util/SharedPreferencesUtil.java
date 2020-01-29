@@ -148,7 +148,7 @@ public class SharedPreferencesUtil {
             } catch (IllegalAccessException e) {
             } catch (InvocationTargetException e) {
             }
-            editor.commit();
+            editor.apply();
         }
     }
 }

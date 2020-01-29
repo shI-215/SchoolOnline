@@ -1,6 +1,8 @@
 package com.zijing.schoolonline.activity;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBar;
@@ -8,20 +10,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.zijing.schoolonline.ApplicationParam;
 import com.zijing.schoolonline.R;
 import com.zijing.schoolonline.adapter.RecordAdapter;
-import com.zijing.schoolonline.bean.Record;
+import com.zijing.schoolonline.bean.Recharge;
+import com.zijing.schoolonline.presenter.MyPresenter;
+import com.zijing.schoolonline.presenter.MyPresenterImpl;
+import com.zijing.schoolonline.view.MyView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class RecordActivity extends AppCompatActivity {
+public class RecordActivity extends AppCompatActivity implements MyView {
 
-    private List<Record> recordList = new ArrayList<>();
-    private int recordType;
+    private List<Recharge> recharges = new ArrayList<>();
+    private MyPresenter myPresenter;
+    private Context context;
 
     private RecyclerView rv_record;
 
@@ -34,35 +37,21 @@ public class RecordActivity extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        recordType = getIntent().getIntExtra("recordType", 0);
-        if (recordType == 1) {
-            setTitle(ApplicationParam.AIR_RECORD_VALUE);
-        } else if (recordType == 2) {
-            setTitle(ApplicationParam.ELECT_RECORD_VALUE);
-        } else if (recordType == 3) {
-            setTitle(ApplicationParam.WATER_RECORD_VALUE);
-        }
+        setTitle("充值记录");
+        myPresenter = new MyPresenterImpl(this);
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                myPresenter.getUserAllRecharge(2020);
+            }
+        }.start();
+        context = this;
         initView();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        rv_record.setLayoutManager(layoutManager);
-        RecordAdapter adapter = new RecordAdapter(recordList);
-        rv_record.setAdapter(adapter);
     }
 
     private void initView() {
         rv_record = (RecyclerView) findViewById(R.id.rv_record);
-
-        for (int i = 1; i <= 20; i++) {
-            Record record = new Record();
-            record.setRid(i);
-            record.setAccount("紫荆科技");
-            record.setAmount(i + 1.0);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");// HH:mm:ss
-            //获取当前时间
-            Date date = new Date(System.currentTimeMillis());
-            record.setTime(simpleDateFormat.format(date) + "");
-            recordList.add(record);
-        }
     }
 
     @Override
@@ -73,5 +62,20 @@ public class RecordActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSuccess(Object object) {
+        recharges = (List<Recharge>) object;
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        rv_record.setLayoutManager(layoutManager);
+        RecordAdapter adapter = new RecordAdapter(recharges);
+        rv_record.setAdapter(adapter);
+        Log.v("rechargeActivity", recharges.toString());
+    }
+
+    @Override
+    public void onFailed(Object object) {
+
     }
 }

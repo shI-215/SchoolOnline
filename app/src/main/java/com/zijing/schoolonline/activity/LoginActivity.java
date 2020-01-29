@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.zijing.schoolonline.ApplicationParam;
 import com.zijing.schoolonline.MainActivity;
 import com.zijing.schoolonline.R;
 import com.zijing.schoolonline.bean.User;
@@ -94,10 +96,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onSuccess(final User user) {
+        Log.v("user", user.toString());
         new Thread(new Runnable() {
             @Override
             public void run() {
                 SharedPreferencesUtil.put(context, "userId", user.getUserId());
+                ApplicationParam.USER_PHONE = user.getUserPhone();
                 SharedPreferencesUtil.put(context, "userPhone", user.getUserPhone());
                 SharedPreferencesUtil.put(context, "userName", user.getUserName());
                 SharedPreferencesUtil.put(context, "userAutograph", user.getUserAutograph());

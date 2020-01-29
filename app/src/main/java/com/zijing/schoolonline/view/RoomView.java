@@ -1,9 +1,9 @@
 package com.zijing.schoolonline.view;
 
-import java.util.List;
+import com.zijing.schoolonline.bean.Room;
 
 public interface RoomView {
-    void onSuccess(List<Object> list);
+    void onSuccess(Room room);
 
     void onFailed();
 }

@@ -41,8 +41,8 @@ public class RegisterPresenterImpl implements RegisterPresenter, RegisterCallBac
     }
 
     @Override
-    public void airRecharge(int money) {
-        userModel.airRechargeData(money, this);
+    public void airRecharge(int roomId, int money) {
+        userModel.airRechargeData(roomId, money, this);
     }
 
     @Override

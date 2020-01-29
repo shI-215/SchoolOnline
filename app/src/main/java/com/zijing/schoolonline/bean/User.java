@@ -15,7 +15,6 @@ public class User {
      * water : {"waterId":202010101,"waterMoney":0}
      */
 
-    private RoomBean room;
     private String userAutograph;
     private String userBirthday;
     private long userId;
@@ -23,29 +22,22 @@ public class User {
     private String userPassword;
     private String userPhone;
     private String userSex;
-    private WaterBean water;
+    private Room room;
+    private Water water;
 
     @Override
     public String toString() {
         return "User{" +
-                "room=" + room +
-                ", userAutograph='" + userAutograph + '\'' +
+                "userAutograph='" + userAutograph + '\'' +
                 ", userBirthday='" + userBirthday + '\'' +
                 ", userId=" + userId +
                 ", userName='" + userName + '\'' +
                 ", userPassword='" + userPassword + '\'' +
                 ", userPhone='" + userPhone + '\'' +
                 ", userSex='" + userSex + '\'' +
+                ", room=" + room +
                 ", water=" + water +
                 '}';
-    }
-
-    public RoomBean getRoom() {
-        return room;
-    }
-
-    public void setRoom(RoomBean room) {
-        this.room = room;
     }
 
     public String getUserAutograph() {
@@ -104,53 +96,19 @@ public class User {
         this.userSex = userSex;
     }
 
-    public WaterBean getWater() {
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public Water getWater() {
         return water;
     }
 
-    public void setWater(WaterBean water) {
+    public void setWater(Water water) {
         this.water = water;
-    }
-
-    public static class RoomBean {
-        /**
-         * roomId : 202001101
-         */
-
-        private int roomId;
-
-        public int getRoomId() {
-            return roomId;
-        }
-
-        public void setRoomId(int roomId) {
-            this.roomId = roomId;
-        }
-    }
-
-    public static class WaterBean {
-        /**
-         * waterId : 202010101
-         * waterMoney : 0.0
-         */
-
-        private int waterId;
-        private double waterMoney;
-
-        public int getWaterId() {
-            return waterId;
-        }
-
-        public void setWaterId(int waterId) {
-            this.waterId = waterId;
-        }
-
-        public double getWaterMoney() {
-            return waterMoney;
-        }
-
-        public void setWaterMoney(double waterMoney) {
-            this.waterMoney = waterMoney;
-        }
     }
 }

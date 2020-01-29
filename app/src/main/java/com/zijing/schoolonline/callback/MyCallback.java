@@ -1,16 +1,7 @@
 package com.zijing.schoolonline.callback;
 
-import com.google.gson.Gson;
-import com.zhy.http.okhttp.callback.Callback;
-import com.zijing.schoolonline.bean.Message;
-import com.zijing.schoolonline.bean.User;
+public interface MyCallback<T> {
+    void onSuccess(T t);
 
-import okhttp3.Response;
-
-public abstract class MyCallback extends Callback<User> {
-    @Override
-    public User parseNetworkResponse(Response response, int id) throws Exception {
-        Message message = new Gson().fromJson(response.body().string(), Message.class);
-        return new Gson().fromJson(message.getData(), User.class);
-    }
+    void onFailed(T t);
 }

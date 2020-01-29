@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:paddingTop="5dp"
     android:padding="10dp">
 
     <TextView
-        android:id="@+id/tv_id"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="序号" />
-
-    <TextView
         android:id="@+id/tv_account"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="账户" />
-
-    <TextView
-        android:id="@+id/tv_amount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="金额" />
+        android:layout_alignParentLeft="true"
+        android:text="账户"
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/tv_time"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="日期" />
-</LinearLayout>
+        android:layout_below="@id/tv_account"
+        android:text="日期"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tv_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="充值类型"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tv_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="金额"
+        android:textSize="30sp" />
+</RelativeLayout>

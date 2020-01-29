@@ -15,16 +15,16 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.zijing.schoolonline.R;
-import com.zijing.schoolonline.presenter.RoomPresenter;
-import com.zijing.schoolonline.presenter.RoomPresenterImpl;
+import com.zijing.schoolonline.presenter.ListPresenter;
+import com.zijing.schoolonline.presenter.ListPresenterImpl;
 import com.zijing.schoolonline.util.SharedPreferencesUtil;
-import com.zijing.schoolonline.view.RoomView;
+import com.zijing.schoolonline.view.ListView;
 
 import java.util.List;
 
-public class RoomActivity extends AppCompatActivity implements View.OnClickListener, RoomView {
+public class RoomActivity extends AppCompatActivity implements View.OnClickListener, ListView {
 
-    private RoomPresenter roomPresenter;
+    private ListPresenter listPresenter;
     private Context context;
 
     private Long userId;
@@ -47,7 +47,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        roomPresenter = new RoomPresenterImpl(this);
+        listPresenter = new ListPresenterImpl(this);
         context = this;
     }
 
@@ -77,7 +77,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.edt_area:
                 SHOW_TYPE = 1;
                 SHOW_TITLE = "区域选择";
-                roomPresenter.getRoomArea();
+                listPresenter.getRoomArea();
                 break;
             case R.id.edt_doorplate:
                 if (TextUtils.isEmpty(area)) {
@@ -85,7 +85,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     SHOW_TYPE = 2;
                     SHOW_TITLE = "门牌号选择";
-                    roomPresenter.getRoomDoorplate(area);
+                    listPresenter.getRoomDoorplate(area);
                 }
                 break;
             case R.id.btn_room:
@@ -111,7 +111,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
         // TODO validate success, do something
         userId = (Long) SharedPreferencesUtil.get(context, "userId", 0L);
         SHOW_TYPE = 3;
-        roomPresenter.bindingRoom(userId, area, doorplate);
+        listPresenter.bindingRoom(userId, area, doorplate);
     }
 
     @Override
@@ -151,12 +151,12 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onFailed() {
-
+        Toast.makeText(context, "认证失败", Toast.LENGTH_LONG).show();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        roomPresenter.onDestroy();
+        listPresenter.onDestroy();
     }
 }

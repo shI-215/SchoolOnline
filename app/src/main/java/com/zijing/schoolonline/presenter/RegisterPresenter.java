@@ -11,5 +11,5 @@ public interface RegisterPresenter {
 
     void userGetUser(String phone);
 
-    void airRecharge(int index);
+    void airRecharge(int roomId, int index);
 }

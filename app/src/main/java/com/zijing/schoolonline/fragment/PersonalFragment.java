@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.zijing.schoolonline.ApplicationParam;
 import com.zijing.schoolonline.MainActivity;
 import com.zijing.schoolonline.R;
 import com.zijing.schoolonline.activity.LoginActivity;
@@ -31,8 +32,6 @@ public class PersonalFragment extends Fragment implements View.OnClickListener, 
 
     private RegisterPresenter registerPresenter;
 
-    private String roomInfo = "";
-    //    private String roomInfo = "一栋-101";
     private String phone;
 
     private ImageView iv_user_image;
@@ -71,12 +70,12 @@ public class PersonalFragment extends Fragment implements View.OnClickListener, 
         cl_phone.setText("电话", phone, "", 0, true);
         cl_phone.setOnClickListener(this);
         tv_user_signature.setText((String) SharedPreferencesUtil.get(getActivity(), "userAutograph", "走自己的路，让别人去说吧。"));
-        if (TextUtils.isEmpty(roomInfo)) {
-            cl_room.setText("宿舍", "未绑定宿舍", "", 1, true);
-            cl_room.setClickable(true);
+        if (TextUtils.isEmpty(ApplicationParam.ROOM_INFORMATION)) {
+            cl_room.setText("宿舍", "宿舍认证", "", 1, true);
+            cl_room.setEnabled(true);
         } else {
-            cl_room.setText("宿舍", roomInfo, "", 0, false);
-            cl_room.setClickable(false);
+            cl_room.setText("宿舍", ApplicationParam.ROOM_INFORMATION, "", 0, false);
+            cl_room.setEnabled(false);
         }
         String versionName = VersionCodeUtil.getVerName(getContext());
         cl_version.setText("版本", versionName, "", 0, false);

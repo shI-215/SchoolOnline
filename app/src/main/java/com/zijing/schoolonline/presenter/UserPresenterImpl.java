@@ -1,12 +1,12 @@
 package com.zijing.schoolonline.presenter;
 
 import com.zijing.schoolonline.bean.User;
-import com.zijing.schoolonline.callback.UCallBack;
+import com.zijing.schoolonline.callback.LoginCallBack;
 import com.zijing.schoolonline.model.UserModel;
 import com.zijing.schoolonline.model.UserModelImpl;
 import com.zijing.schoolonline.view.LoginView;
 
-public class UserPresenterImpl implements UserPresenter, UCallBack {
+public class UserPresenterImpl implements UserPresenter, LoginCallBack {
     private LoginView loginView;
     private UserModel userModel;
 

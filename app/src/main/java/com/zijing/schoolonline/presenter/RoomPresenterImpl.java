@@ -1,25 +1,24 @@
 package com.zijing.schoolonline.presenter;
 
+import com.zijing.schoolonline.bean.Room;
 import com.zijing.schoolonline.callback.RoomCallBack;
-import com.zijing.schoolonline.model.UserModel;
-import com.zijing.schoolonline.model.UserModelImpl;
+import com.zijing.schoolonline.model.RoomModel;
+import com.zijing.schoolonline.model.RoomModelImpl;
 import com.zijing.schoolonline.view.RoomView;
-
-import java.util.List;
 
 public class RoomPresenterImpl implements RoomPresenter, RoomCallBack {
     private RoomView roomView;
-    private UserModel userModel;
+    private RoomModel roomModel;
 
     public RoomPresenterImpl(RoomView roomView) {
         this.roomView = roomView;
-        this.userModel = new UserModelImpl();
+        this.roomModel = new RoomModelImpl();
     }
 
     @Override
-    public void onSuccess(List<Object> list) {
+    public void onSuccess(Room room) {
         if (roomView != null) {
-            roomView.onSuccess(list);
+            roomView.onSuccess(room);
         }
     }
 
@@ -30,24 +29,13 @@ public class RoomPresenterImpl implements RoomPresenter, RoomCallBack {
         }
     }
 
-
     @Override
     public void onDestroy() {
         roomView = null;
     }
 
     @Override
-    public void getRoomDoorplate(String area) {
-        userModel.getRoomDoorplateData(area, this);
-    }
-
-    @Override
-    public void bindingRoom(Long userId, String area, String doorplate) {
-        userModel.bindingRoomData(userId, area, doorplate, this);
-    }
-
-    @Override
-    public void getRoomArea() {
-        userModel.getRoomAreaData(this);
+    public void getRoomInfo(int roomId) {
+        roomModel.getRoomInfo(roomId, this);
     }
 }

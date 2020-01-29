@@ -2,12 +2,14 @@ package com.zijing.schoolonline.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import com.zijing.schoolonline.ApplicationParam;
 import com.zijing.schoolonline.R;
 import com.zijing.schoolonline.activity.RechargeActivity;
 import com.zijing.schoolonline.activity.RecordActivity;
@@ -59,17 +62,29 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         Intent intent = new Intent();
         switch (v.getId()) {
             case R.id.cl_air:
-                intent.putExtra("titleRecharge", 1);
+                if (TextUtils.isEmpty(ApplicationParam.ROOM_INFORMATION)) {
+                    Toast.makeText(getContext(), "请先认证宿舍", Toast.LENGTH_LONG).show();
+                } else {
+                    intent.putExtra("titleRecharge", 1);
+                    intent.setClass(getActivity(), RechargeActivity.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.cl_elect:
-                intent.putExtra("titleRecharge", 2);
+                if (TextUtils.isEmpty(ApplicationParam.ROOM_INFORMATION)) {
+                    Toast.makeText(getContext(), "请先认证宿舍", Toast.LENGTH_LONG).show();
+                } else {
+                    intent.putExtra("titleRecharge", 2);
+                    intent.setClass(getActivity(), RechargeActivity.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.cl_water:
                 intent.putExtra("titleRecharge", 3);
+                intent.setClass(getActivity(), RechargeActivity.class);
+                startActivity(intent);
                 break;
         }
-        intent.setClass(getActivity(), RechargeActivity.class);
-        startActivity(intent);
     }
 
     @Override
@@ -80,20 +95,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Intent intent = new Intent();
         switch (item.getItemId()) {
             case R.id.item_air_record:
-                intent.putExtra("recordType", 1);
-                break;
-            case R.id.item_elect_record:
-                intent.putExtra("recordType", 2);
-                break;
-            case R.id.item_water_record:
-                intent.putExtra("recordType", 3);
+                startActivity(new Intent(getContext(), RecordActivity.class));
                 break;
         }
-        intent.setClass(getContext(), RecordActivity.class);
-        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 }

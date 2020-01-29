@@ -35,7 +35,6 @@ public class NextActivity extends AppCompatActivity implements View.OnClickListe
     public static AppCompatActivity activity;
     private Context context;
 
-    private String country = "86";
     private String phone;
     private int titleType;
     private int updatePhone;
@@ -122,7 +121,7 @@ public class NextActivity extends AppCompatActivity implements View.OnClickListe
                 return;
             }
         }
-        SMSSDK.getVerificationCode("86", phone);
+        SMSSDK.getVerificationCode(ApplicationParam.MOB_COUNTRY, phone);
     }
 
     private void submit() {
@@ -146,7 +145,7 @@ public class NextActivity extends AppCompatActivity implements View.OnClickListe
 
         // TODO validate success, do something
 
-        SMSSDK.submitVerificationCode(country, phone, code);
+        SMSSDK.submitVerificationCode(ApplicationParam.MOB_COUNTRY, phone, code);
     }
 
     EventHandler eventHandler = new EventHandler() {
