@@ -7,5 +7,5 @@ public interface ListPresenter {
 
     void getRoomDoorplate(String area);
 
-    void bindingRoom(Long userId, String area, String doorplate);
+    void bindingRoom(String area, String doorplate);
 }

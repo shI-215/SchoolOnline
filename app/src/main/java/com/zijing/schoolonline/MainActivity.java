@@ -1,32 +1,33 @@
 package com.zijing.schoolonline;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.zijing.schoolonline.activity.LoginActivity;
 import com.zijing.schoolonline.adapter.MainAdapter;
-import com.zijing.schoolonline.bean.Room;
 import com.zijing.schoolonline.fragment.HomeFragment;
 import com.zijing.schoolonline.fragment.PersonalFragment;
-import com.zijing.schoolonline.presenter.RoomPresenter;
-import com.zijing.schoolonline.presenter.RoomPresenterImpl;
-import com.zijing.schoolonline.util.SharedPreferencesUtil;
-import com.zijing.schoolonline.view.RoomView;
+import com.zijing.schoolonline.presenter.MainPresenter;
+import com.zijing.schoolonline.presenter.MainPresenterImpl;
+import com.zijing.schoolonline.util.ToastUtil;
+import com.zijing.schoolonline.view.MainView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements RoomView {
+public class MainActivity extends AppCompatActivity implements MainView {
 
     public static AppCompatActivity compatActivity;
     private List<Fragment> mFragments;
     private Context context;
-    private RoomPresenter roomPresenter;
+    private MainPresenter mainPresenter;
 
     private ViewPager vp_main_page;
 
@@ -35,18 +36,10 @@ public class MainActivity extends AppCompatActivity implements RoomView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         compatActivity = this;
+        mainPresenter = new MainPresenterImpl(this);
+        mainPresenter.getUserInfo();
         context = this;
-        roomPresenter = new RoomPresenterImpl(this);
-        int roomId = (int) SharedPreferencesUtil.get(context, "roomId", 0);
-        Log.v("roomId", roomId + "");
-        if (roomId != 0) {
-            getRoomInfo(roomId);
-        }
         initView();
-    }
-
-    private void getRoomInfo(int roomId) {
-        roomPresenter.getRoomInfo(roomId);
     }
 
     private void initView() {
@@ -64,18 +57,30 @@ public class MainActivity extends AppCompatActivity implements RoomView {
     }
 
     @Override
-    public void onSuccess(Room room) {
-        ApplicationParam.ROOM_INFORMATION = room.getRoomArea() + "-" + room.getRoomDoorplate();
+    public void onSuccess(Object object) {
+        Log.v("get", object.toString());
+        ToastUtil.l(object.toString());
     }
 
     @Override
-    public void onFailed() {
-        Toast.makeText(context, "获取信息失败", Toast.LENGTH_SHORT).show();
+    public void onFailed(Object object) {
+        ToastUtil.s(object.toString());
+    }
+
+    @Override
+    public void onError(Object object) {
+        SharedPreferences preferences = context.getSharedPreferences(ApplicationParam.SP_NAME, context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.commit();
+        finish();
+        startActivity(new Intent(context, LoginActivity.class));
+        ToastUtil.l(object.toString());
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        roomPresenter.onDestroy();
+        mainPresenter.onDestroy();
     }
 }

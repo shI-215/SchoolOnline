@@ -1,6 +1,7 @@
 package com.zijing.schoolonline.fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -24,6 +25,10 @@ import com.zijing.schoolonline.activity.RecordActivity;
 import com.zijing.schoolonline.layout.CardLayout;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
+
+    private SharedPreferences preferences = ApplicationParam.myContext.getSharedPreferences(ApplicationParam.SP_NAME,
+            ApplicationParam.myContext.MODE_PRIVATE);
+
     private CardLayout cl_air;
     private CardLayout cl_elect;
     private CardLayout cl_water;
@@ -59,10 +64,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        String room = preferences.getString("room", "");
         Intent intent = new Intent();
         switch (v.getId()) {
             case R.id.cl_air:
-                if (TextUtils.isEmpty(ApplicationParam.ROOM_INFORMATION)) {
+                if (TextUtils.isEmpty(room)) {
                     Toast.makeText(getContext(), "请先认证宿舍", Toast.LENGTH_LONG).show();
                 } else {
                     intent.putExtra("titleRecharge", 1);
@@ -71,7 +77,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.cl_elect:
-                if (TextUtils.isEmpty(ApplicationParam.ROOM_INFORMATION)) {
+                if (TextUtils.isEmpty(room)) {
                     Toast.makeText(getContext(), "请先认证宿舍", Toast.LENGTH_LONG).show();
                 } else {
                     intent.putExtra("titleRecharge", 2);

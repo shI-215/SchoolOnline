@@ -1,32 +1,17 @@
 package com.zijing.schoolonline.presenter;
 
-import com.zijing.schoolonline.bean.User;
-import com.zijing.schoolonline.callback.LoginCallBack;
+import com.zijing.schoolonline.callback.MyCallback;
 import com.zijing.schoolonline.model.UserModel;
 import com.zijing.schoolonline.model.UserModelImpl;
-import com.zijing.schoolonline.view.LoginView;
+import com.zijing.schoolonline.view.MyView;
 
-public class UserPresenterImpl implements UserPresenter, LoginCallBack {
-    private LoginView loginView;
+public class UserPresenterImpl implements UserPresenter, MyCallback<Object> {
+    private MyView myView;
     private UserModel userModel;
 
-    public UserPresenterImpl(LoginView loginView) {
-        this.loginView = loginView;
+    public UserPresenterImpl(MyView myView) {
+        this.myView = myView;
         this.userModel = new UserModelImpl();
-    }
-
-    @Override
-    public void onSuccess(User user) {
-        if (loginView != null) {
-            loginView.onSuccess(user);
-        }
-    }
-
-    @Override
-    public void onFailed() {
-        if (loginView != null) {
-            loginView.onFailed();
-        }
     }
 
     @Override
@@ -35,7 +20,36 @@ public class UserPresenterImpl implements UserPresenter, LoginCallBack {
     }
 
     @Override
+    public void userRegister(String phone, String pwd) {
+        userModel.userRegisterData(phone, pwd, this);
+    }
+
+    @Override
+    public void userFind(String phone, String pwd) {
+        userModel.userFindData(phone, pwd, this);
+    }
+
+    @Override
+    public void userLogOut() {
+        userModel.userLogOutData(this);
+    }
+
+    @Override
+    public void onSuccess(Object object) {
+        if (myView != null) {
+            myView.onSuccess(object);
+        }
+    }
+
+    @Override
+    public void onFailed(Object object) {
+        if (myView != null) {
+            myView.onFailed(object);
+        }
+    }
+
+    @Override
     public void onDestroy() {
-        loginView = null;
+        myView = null;
     }
 }

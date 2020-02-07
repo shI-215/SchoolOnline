@@ -1,6 +1,7 @@
 package com.zijing.schoolonline.fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -20,17 +21,18 @@ import com.zijing.schoolonline.R;
 import com.zijing.schoolonline.activity.LoginActivity;
 import com.zijing.schoolonline.activity.NextActivity;
 import com.zijing.schoolonline.activity.RoomActivity;
-import com.zijing.schoolonline.bean.Message;
 import com.zijing.schoolonline.layout.ClickLayout;
-import com.zijing.schoolonline.presenter.RegisterPresenter;
-import com.zijing.schoolonline.presenter.RegisterPresenterImpl;
+import com.zijing.schoolonline.presenter.UserPresenter;
+import com.zijing.schoolonline.presenter.UserPresenterImpl;
 import com.zijing.schoolonline.util.SharedPreferencesUtil;
 import com.zijing.schoolonline.util.VersionCodeUtil;
-import com.zijing.schoolonline.view.RegisterView;
+import com.zijing.schoolonline.view.MyView;
 
-public class PersonalFragment extends Fragment implements View.OnClickListener, RegisterView {
+public class PersonalFragment extends Fragment implements View.OnClickListener, MyView {
 
-    private RegisterPresenter registerPresenter;
+    SharedPreferences preferences = ApplicationParam.myContext.getSharedPreferences(ApplicationParam.SP_NAME,
+            ApplicationParam.myContext.MODE_PRIVATE);
+    private UserPresenter userPresenter;
 
     private String phone;
 
@@ -45,7 +47,7 @@ public class PersonalFragment extends Fragment implements View.OnClickListener, 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_personal, container, false);
-        registerPresenter = new RegisterPresenterImpl(this);
+        userPresenter = new UserPresenterImpl(this);
         return view;
     }
 
@@ -65,16 +67,18 @@ public class PersonalFragment extends Fragment implements View.OnClickListener, 
         cl_version_update = (ClickLayout) getActivity().findViewById(R.id.cl_version_update);
         btn_unlogin = (Button) getActivity().findViewById(R.id.btn_unlogin);
 
-        tv_user_name.setText((String) SharedPreferencesUtil.get(getActivity(), "userName", "紫荆科技"));
-        phone = (String) SharedPreferencesUtil.get(getActivity(), "userPhone", "12345678900");
+        String name = preferences.getString("name", "");
+        phone = preferences.getString("phone", "");
+        String room = preferences.getString("room", "");
+        tv_user_name.setText(name);
         cl_phone.setText("电话", phone, "", 0, true);
         cl_phone.setOnClickListener(this);
         tv_user_signature.setText((String) SharedPreferencesUtil.get(getActivity(), "userAutograph", "走自己的路，让别人去说吧。"));
-        if (TextUtils.isEmpty(ApplicationParam.ROOM_INFORMATION)) {
+        if (TextUtils.isEmpty(room)) {
             cl_room.setText("宿舍", "宿舍认证", "", 1, true);
             cl_room.setEnabled(true);
         } else {
-            cl_room.setText("宿舍", ApplicationParam.ROOM_INFORMATION, "", 0, false);
+            cl_room.setText("宿舍", room, "", 0, false);
             cl_room.setEnabled(false);
         }
         String versionName = VersionCodeUtil.getVerName(getContext());
@@ -98,21 +102,23 @@ public class PersonalFragment extends Fragment implements View.OnClickListener, 
                 startActivity(new Intent(getContext(), RoomActivity.class));
                 break;
             case R.id.btn_unlogin:
-                registerPresenter.userLogOut(phone);
+                userPresenter.userLogOut();
                 break;
         }
     }
 
     @Override
-    public void onSuccess() {
+    public void onSuccess(Object object) {
         Toast.makeText(getActivity(), "退出登录成功", Toast.LENGTH_SHORT).show();
-        SharedPreferencesUtil.clear(getActivity());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.commit();
         startActivity(new Intent(getContext(), LoginActivity.class));
         MainActivity.compatActivity.finish();
     }
 
     @Override
-    public void onFailed(Message message) {
+    public void onFailed(Object object) {
 
     }
 }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,16 +12,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.zijing.schoolonline.ApplicationParam;
 import com.zijing.schoolonline.MainActivity;
 import com.zijing.schoolonline.R;
-import com.zijing.schoolonline.bean.User;
 import com.zijing.schoolonline.presenter.UserPresenter;
 import com.zijing.schoolonline.presenter.UserPresenterImpl;
-import com.zijing.schoolonline.util.SharedPreferencesUtil;
-import com.zijing.schoolonline.view.LoginView;
+import com.zijing.schoolonline.util.ToastUtil;
+import com.zijing.schoolonline.view.MyView;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, LoginView {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, MyView {
 
     private Context context;
     private UserPresenter userPresenter;
@@ -60,17 +57,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btn_login:
                 submit();
                 break;
-            case R.id.tv_find:
-                Intent intent = new Intent();
-                intent.putExtra("titleType", 2);
-                intent.setClass(context, NextActivity.class);
-                startActivity(intent);
-                break;
             case R.id.tv_register:
                 Intent intent2 = new Intent();
                 intent2.putExtra("titleType", 1);
                 intent2.setClass(context, NextActivity.class);
                 startActivity(intent2);
+                break;
+            case R.id.tv_find:
+                Intent intent = new Intent();
+                intent.putExtra("titleType", 2);
+                intent.setClass(context, NextActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -90,45 +87,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         // TODO validate success, do something
-
         userPresenter.userLogin(phone, pwd);
-    }
-
-    @Override
-    public void onSuccess(final User user) {
-        Log.v("user", user.toString());
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                SharedPreferencesUtil.put(context, "userId", user.getUserId());
-                ApplicationParam.USER_PHONE = user.getUserPhone();
-                SharedPreferencesUtil.put(context, "userPhone", user.getUserPhone());
-                SharedPreferencesUtil.put(context, "userName", user.getUserName());
-                SharedPreferencesUtil.put(context, "userAutograph", user.getUserAutograph());
-                if (user.getWater() != null) {
-                    SharedPreferencesUtil.put(context, "waterId", user.getWater().getWaterId());
-                } else {
-                    SharedPreferencesUtil.put(context, "waterId", 0);
-                }
-                if (user.getRoom() != null) {
-                    SharedPreferencesUtil.put(context, "roomId", user.getRoom().getRoomId());
-                } else {
-                    SharedPreferencesUtil.put(context, "roomId", 0);
-                }
-            }
-        }).start();
-        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-        finish();
-    }
-
-    @Override
-    public void onFailed() {
-        Toast.makeText(context, "登录失败，用户名或者密码错误！！", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onDestroy() {
         userPresenter.onDestroy();
         super.onDestroy();
+    }
+
+    @Override
+    public void onSuccess(Object object) {
+        startActivity(new Intent(context, MainActivity.class));
+        finish();
+    }
+
+    @Override
+    public void onFailed(Object object) {
+        ToastUtil.l(object.toString());
     }
 }

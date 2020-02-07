@@ -3,6 +3,7 @@ package com.zijing.schoolonline.activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -14,10 +15,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.zijing.schoolonline.MainActivity;
 import com.zijing.schoolonline.R;
 import com.zijing.schoolonline.presenter.ListPresenter;
 import com.zijing.schoolonline.presenter.ListPresenterImpl;
-import com.zijing.schoolonline.util.SharedPreferencesUtil;
 import com.zijing.schoolonline.view.ListView;
 
 import java.util.List;
@@ -109,15 +110,16 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         // TODO validate success, do something
-        userId = (Long) SharedPreferencesUtil.get(context, "userId", 0L);
         SHOW_TYPE = 3;
-        listPresenter.bindingRoom(userId, area, doorplate);
+        listPresenter.bindingRoom(area, doorplate);
     }
 
     @Override
     public void onSuccess(List<Object> list) {
         if (SHOW_TYPE == 3) {
             Toast.makeText(context, "认证成功", Toast.LENGTH_LONG).show();
+            MainActivity.compatActivity.finish();
+            startActivity(new Intent(context, MainActivity.class));
             finish();
         } else {
             String[] strings = new String[list.size()];

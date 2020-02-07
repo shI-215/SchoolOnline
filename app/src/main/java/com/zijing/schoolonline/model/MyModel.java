@@ -17,5 +17,5 @@ public interface MyModel {
 
     void waterRechargeData(Integer waterId, int money, final MyCallback myCallback);
 
-    void getUserAllRechargeData(int userId, final MyCallback myCallback);
+    void getUserAllRechargeData(final MyCallback myCallback);
 }

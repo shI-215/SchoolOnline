@@ -42,8 +42,8 @@ public class ListPresenterImpl implements ListPresenter, ListCallBack {
     }
 
     @Override
-    public void bindingRoom(Long userId, String area, String doorplate) {
-        roomModel.bindingRoomData(userId, area, doorplate, this);
+    public void bindingRoom(String area, String doorplate) {
+        roomModel.bindingRoomData(area, doorplate, this);
     }
 
     @Override

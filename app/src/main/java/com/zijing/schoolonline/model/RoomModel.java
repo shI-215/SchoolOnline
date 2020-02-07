@@ -10,7 +10,7 @@ public interface RoomModel {
 
     void getRoomDoorplateData(String area, final ListCallBack listCallBack);
 
-    void bindingRoomData(Long userId, String area, String doorplate, final ListCallBack listCallBack);
+    void bindingRoomData(String area, String doorplate, final ListCallBack listCallBack);
 
     void getRoomInfo(int roomId, final RoomCallBack roomCallBack);
 }

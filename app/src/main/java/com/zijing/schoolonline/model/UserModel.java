@@ -1,18 +1,16 @@
 package com.zijing.schoolonline.model;
 
-import com.zijing.schoolonline.callback.RegisterCallBack;
-import com.zijing.schoolonline.callback.LoginCallBack;
+import com.zijing.schoolonline.callback.MainCallback;
+import com.zijing.schoolonline.callback.MyCallback;
 
 public interface UserModel {
-    void userLoginData(String phone, String password, final LoginCallBack loginCallBack);
+    void userLoginData(String phone, String password, final MyCallback myCallback);
 
-    void userRegisterData(String phone, String pwd, final RegisterCallBack registerCallBack);
+    void userRegisterData(String phone, String pwd, final MyCallback myCallback);
 
-    void userFindData(String phone, String pwd, final RegisterCallBack registerCallBack);
+    void userFindData(String phone, String pwd, final MyCallback myCallback);
 
-    void userLogOutData(String phone, final RegisterCallBack registerCallBack);
+    void getUserInfoData(final MainCallback mainCallback);
 
-    void userGetUser(String phone, final RegisterCallBack registerCallBack);
-
-    void airRechargeData(int roomId, int money, final RegisterCallBack registerCallBack);
+    void userLogOutData(final MyCallback myCallback);
 }

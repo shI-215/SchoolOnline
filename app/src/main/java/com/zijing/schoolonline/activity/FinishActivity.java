@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -19,15 +18,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.zijing.schoolonline.ApplicationParam;
 import com.zijing.schoolonline.R;
-import com.zijing.schoolonline.bean.Message;
-import com.zijing.schoolonline.presenter.RegisterPresenter;
-import com.zijing.schoolonline.presenter.RegisterPresenterImpl;
+import com.zijing.schoolonline.presenter.UserPresenter;
+import com.zijing.schoolonline.presenter.UserPresenterImpl;
 import com.zijing.schoolonline.util.RegexUtil;
-import com.zijing.schoolonline.view.RegisterView;
+import com.zijing.schoolonline.util.ToastUtil;
+import com.zijing.schoolonline.view.MyView;
 
-public class FinishActivity extends AppCompatActivity implements View.OnClickListener, RegisterView {
+public class FinishActivity extends AppCompatActivity implements View.OnClickListener, MyView {
 
-    private RegisterPresenter registerPresenter;
+    private UserPresenter userPresenter;
     private Context context;
 
     private String phone;
@@ -54,7 +53,7 @@ public class FinishActivity extends AppCompatActivity implements View.OnClickLis
             setTitle(ApplicationParam.FINDV_ALUE);
         }
         context = this;
-        registerPresenter = new RegisterPresenterImpl(this);
+        userPresenter = new UserPresenterImpl(this);
         initView();
     }
 
@@ -110,9 +109,9 @@ public class FinishActivity extends AppCompatActivity implements View.OnClickLis
         }
         // TODO validate success, do something
         if (titleType == 1) {//用户注册
-            registerPresenter.userRegister(phone, pwd);
+            userPresenter.userRegister(phone, pwd);
         } else if (titleType == 2) {//找回密码
-            registerPresenter.userFind(phone, pwd);
+            userPresenter.userFind(phone, pwd);
         }
     }
 
@@ -127,32 +126,26 @@ public class FinishActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     @Override
-    public void onSuccess() {
-
-        if (titleType == 1) {//用户注册
-            Toast.makeText(context, "注册成功！", Toast.LENGTH_LONG).show();
-        } else if (titleType == 2) {//找回密码
-            Toast.makeText(context, "找回密码成功！", Toast.LENGTH_LONG).show();
-        }
+    public void onSuccess(Object object) {
+//        if (titleType == 1) {//用户注册
+//            Toast.makeText(context, "注册成功！", Toast.LENGTH_LONG).show();
+//        } else if (titleType == 2) {//找回密码
+//            Toast.makeText(context, "找回密码成功！", Toast.LENGTH_LONG).show();
+//        }
+        ToastUtil.l(object.toString());
         startActivity(new Intent(context, LoginActivity.class));
         NextActivity.activity.finish();
         finish();
     }
 
     @Override
-    public void onFailed(Message message) {
-//        if (titleType == 1) {//用户注册
-//            ToastUtil.l(message.getMsg());
-//        } else if (titleType == 2) {//找回密码
-//            ToastUtil.l("找回密码成功！");
-//        }
-        Log.v("FinishActivity::::::", message.toString());
-        Toast.makeText(context, message.getData(), Toast.LENGTH_SHORT).show();
+    public void onFailed(Object object) {
+        ToastUtil.l(object.toString());
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        registerPresenter.onDestroy();
+        userPresenter.onDestroy();
     }
 }

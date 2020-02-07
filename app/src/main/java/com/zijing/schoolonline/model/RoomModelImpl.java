@@ -16,19 +16,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
-
 public class RoomModelImpl implements RoomModel {
 
     @Override
     public void getRoomAreaData(final ListCallBack listCallBack) {
         OkHttpUtils.get().url(ApplicationParam.ROOM_GETAREA_API).build()
                 .execute(new MessageCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-                        listCallBack.onFailed();
-                    }
-
                     @Override
                     public void onResponse(Message message, int id) {
                         Type type = new TypeToken<List<String>>() {
@@ -46,11 +39,6 @@ public class RoomModelImpl implements RoomModel {
                 .build()
                 .execute(new MessageCallback() {
                     @Override
-                    public void onError(Call call, Exception e, int id) {
-                        listCallBack.onFailed();
-                    }
-
-                    @Override
                     public void onResponse(Message message, int id) {
                         Type type = new TypeToken<List<Integer>>() {
                         }.getType();
@@ -61,18 +49,12 @@ public class RoomModelImpl implements RoomModel {
     }
 
     @Override
-    public void bindingRoomData(Long userId, String area, String doorplate, final ListCallBack listCallBack) {
+    public void bindingRoomData(String area, String doorplate, final ListCallBack listCallBack) {
         OkHttpUtils.get().url(ApplicationParam.USER_BINDINGROOM_API)
-                .addParams("userId", userId + "")
                 .addParams("roomArea", area)
                 .addParams("roomDoorplate", doorplate)
                 .build()
                 .execute(new MessageCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-                        listCallBack.onFailed();
-                    }
-
                     @Override
                     public void onResponse(Message message, int id) {
                         if (message.getStatus() == 0) {
@@ -92,11 +74,6 @@ public class RoomModelImpl implements RoomModel {
                 .addParams("roomId", roomId + "")
                 .build()
                 .execute(new MessageCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-                        roomCallBack.onFailed();
-                    }
-
                     @Override
                     public void onResponse(Message message, int id) {
                         if (message.getStatus() == 0) {

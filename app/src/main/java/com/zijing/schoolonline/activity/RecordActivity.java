@@ -10,19 +10,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.zijing.schoolonline.R;
 import com.zijing.schoolonline.adapter.RecordAdapter;
 import com.zijing.schoolonline.bean.Recharge;
 import com.zijing.schoolonline.presenter.MyPresenter;
 import com.zijing.schoolonline.presenter.MyPresenterImpl;
+import com.zijing.schoolonline.util.ToastUtil;
 import com.zijing.schoolonline.view.MyView;
 
-import java.util.ArrayList;
+import java.lang.reflect.Type;
 import java.util.List;
 
 public class RecordActivity extends AppCompatActivity implements MyView {
 
-    private List<Recharge> recharges = new ArrayList<>();
+    private List<Recharge> recharges;
     private MyPresenter myPresenter;
     private Context context;
 
@@ -43,7 +46,7 @@ public class RecordActivity extends AppCompatActivity implements MyView {
             @Override
             public void run() {
                 super.run();
-                myPresenter.getUserAllRecharge(2020);
+                myPresenter.getUserAllRecharge();
             }
         }.start();
         context = this;
@@ -66,7 +69,10 @@ public class RecordActivity extends AppCompatActivity implements MyView {
 
     @Override
     public void onSuccess(Object object) {
-        recharges = (List<Recharge>) object;
+        Type type = new TypeToken<List<Recharge>>() {
+        }.getType();
+        recharges = new Gson().fromJson(object.toString(), type);
+        Log.v("rechargeActivity", recharges.toString());
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rv_record.setLayoutManager(layoutManager);
         RecordAdapter adapter = new RecordAdapter(recharges);
@@ -76,6 +82,6 @@ public class RecordActivity extends AppCompatActivity implements MyView {
 
     @Override
     public void onFailed(Object object) {
-
+        ToastUtil.l(object.toString());
     }
 }

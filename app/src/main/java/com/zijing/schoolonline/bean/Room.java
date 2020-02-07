@@ -18,6 +18,18 @@ public class Room {
     private int roomType;
     private String roomRemark;
 
+    @Override
+    public String toString() {
+        return "Room{" +
+                "roomArea='" + roomArea + '\'' +
+                ", roomDoorplate=" + roomDoorplate +
+                ", roomId=" + roomId +
+                ", roomPopulation=" + roomPopulation +
+                ", roomType=" + roomType +
+                ", roomRemark='" + roomRemark + '\'' +
+                '}';
+    }
+
     public String getRoomArea() {
         return roomArea;
     }

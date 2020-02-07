@@ -50,8 +50,8 @@ public class MyPresenterImpl implements MyPresenter, MyCallback<Object> {
     }
 
     @Override
-    public void getUserAllRecharge(int userId) {
-        myModel.getUserAllRechargeData(userId,this);
+    public void getUserAllRecharge() {
+        myModel.getUserAllRechargeData(this);
     }
 
     @Override

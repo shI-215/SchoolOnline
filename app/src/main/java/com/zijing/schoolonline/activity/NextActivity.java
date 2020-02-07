@@ -23,14 +23,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.zijing.schoolonline.ApplicationParam;
 import com.zijing.schoolonline.R;
-import com.zijing.schoolonline.bean.User;
 import com.zijing.schoolonline.util.RegexUtil;
-import com.zijing.schoolonline.view.LoginView;
+import com.zijing.schoolonline.util.ToastUtil;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
-public class NextActivity extends AppCompatActivity implements View.OnClickListener, LoginView {
+public class NextActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static AppCompatActivity activity;
     private Context context;
@@ -218,6 +217,10 @@ public class NextActivity extends AppCompatActivity implements View.OnClickListe
                 case 4:
                     Toast.makeText(NextActivity.this, "验证码错误", Toast.LENGTH_SHORT).show();
                     break;
+                case 5:
+                    ToastUtil.l(NextActivity.this, "请检查网络");
+//                    Toast.makeText(NextActivity.this, "", Toast.LENGTH_SHORT).show();
+                    break;
             }
         }
     };
@@ -251,15 +254,5 @@ public class NextActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
         SMSSDK.unregisterEventHandler(eventHandler);
-    }
-
-    @Override
-    public void onSuccess(User user) {
-
-    }
-
-    @Override
-    public void onFailed() {
-
     }
 }

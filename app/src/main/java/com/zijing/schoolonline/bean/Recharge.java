@@ -6,7 +6,7 @@ public class Recharge {
     private double rechargeMoney;
     private String rechargeType;
     private String rechargeDate;
-    private Integer rechargeUser;
+    private Long rechargeUser;
     private String rechargeRemark;
 
     @Override
@@ -62,11 +62,11 @@ public class Recharge {
         this.rechargeDate = rechargeDate;
     }
 
-    public Integer getRechargeUser() {
+    public Long getRechargeUser() {
         return rechargeUser;
     }
 
-    public void setRechargeUser(Integer rechargeUser) {
+    public void setRechargeUser(Long rechargeUser) {
         this.rechargeUser = rechargeUser;
     }
 

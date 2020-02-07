@@ -3,21 +3,15 @@ package com.zijing.schoolonline.model;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zijing.schoolonline.ApplicationParam;
 import com.zijing.schoolonline.bean.Air;
 import com.zijing.schoolonline.bean.Elect;
 import com.zijing.schoolonline.bean.Message;
-import com.zijing.schoolonline.bean.Recharge;
 import com.zijing.schoolonline.bean.Water;
 import com.zijing.schoolonline.callback.MessageCallback;
 import com.zijing.schoolonline.callback.MyCallback;
 
-import java.lang.reflect.Type;
-import java.util.List;
-
-import okhttp3.Call;
 import okhttp3.MediaType;
 
 public class MyModelImpl implements MyModel {
@@ -27,11 +21,6 @@ public class MyModelImpl implements MyModel {
         OkHttpUtils.get().url(ApplicationParam.AIR_GETMONEY_API)
                 .addParams("roomId", roomId + "").build()
                 .execute(new MessageCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-                        myCallback.onFailed("");
-                    }
-
                     @Override
                     public void onResponse(Message message, int id) {
                         if (message.getStatus() == 0) {
@@ -49,11 +38,6 @@ public class MyModelImpl implements MyModel {
                 .addParams("roomId", roomId + "").build()
                 .execute(new MessageCallback() {
                     @Override
-                    public void onError(Call call, Exception e, int id) {
-                        myCallback.onFailed("");
-                    }
-
-                    @Override
                     public void onResponse(Message message, int id) {
                         if (message.getStatus() == 0) {
                             myCallback.onSuccess(new Gson().fromJson(message.getData(), Elect.class));
@@ -69,11 +53,6 @@ public class MyModelImpl implements MyModel {
         OkHttpUtils.get().url(ApplicationParam.WATER_GETMONEY_API)
                 .addParams("waterId", waterId + "").build()
                 .execute(new MessageCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-                        myCallback.onFailed("");
-                    }
-
                     @Override
                     public void onResponse(Message message, int id) {
                         if (message.getStatus() == 0) {
@@ -95,11 +74,6 @@ public class MyModelImpl implements MyModel {
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build().execute(new MessageCallback() {
             @Override
-            public void onError(Call call, Exception e, int id) {
-                myCallback.onFailed("充值失败");
-            }
-
-            @Override
             public void onResponse(Message message, int id) {
                 if (message.getStatus() == 0) {
                     myCallback.onSuccess(message);
@@ -119,11 +93,6 @@ public class MyModelImpl implements MyModel {
                 .content(new Gson().toJson(elect))
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build().execute(new MessageCallback() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                myCallback.onFailed("充值失败");
-            }
-
             @Override
             public void onResponse(Message message, int id) {
                 if (message.getStatus() == 0) {
@@ -146,11 +115,6 @@ public class MyModelImpl implements MyModel {
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build().execute(new MessageCallback() {
             @Override
-            public void onError(Call call, Exception e, int id) {
-                myCallback.onFailed("充值失败");
-            }
-
-            @Override
             public void onResponse(Message message, int id) {
                 if (message.getStatus() == 0) {
                     myCallback.onSuccess(message);
@@ -162,25 +126,19 @@ public class MyModelImpl implements MyModel {
     }
 
     @Override
-    public void getUserAllRechargeData(int userId, final MyCallback myCallback) {
+    public void getUserAllRechargeData(final MyCallback myCallback) {
         OkHttpUtils.get().url(ApplicationParam.GETUSERALLRECHARGE_API)
-                .addParams("rechargeUser", userId + "")
                 .build()
                 .execute(new MessageCallback() {
                     @Override
-                    public void onError(Call call, Exception e, int id) {
-                        myCallback.onFailed("");
-                    }
-
-                    @Override
                     public void onResponse(Message message, int id) {
-                        Type type = new TypeToken<List<Recharge>>() {
-                        }.getType();
-                        List<Object> list = new Gson().fromJson(message.getData(), type);
-                        Log.v("getUserAllRechargeData", list.toString());
-                        myCallback.onSuccess(list);
+                        Log.v("recharge", message.getData());
+                        if (message.getData() != null) {
+                            myCallback.onSuccess(message.getData());
+                        } else {
+                            myCallback.onFailed("未查询到相关充值信息");
+                        }
                     }
                 });
     }
-
 }

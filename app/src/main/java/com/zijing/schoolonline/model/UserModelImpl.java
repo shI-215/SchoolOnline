@@ -1,47 +1,47 @@
 package com.zijing.schoolonline.model;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.cookie.CookieJarImpl;
 import com.zijing.schoolonline.ApplicationParam;
 import com.zijing.schoolonline.bean.Message;
 import com.zijing.schoolonline.bean.User;
+import com.zijing.schoolonline.callback.MainCallback;
 import com.zijing.schoolonline.callback.MessageCallback;
-import com.zijing.schoolonline.callback.RegisterCallBack;
-import com.zijing.schoolonline.callback.LoginCallBack;
-import com.zijing.schoolonline.callback.UserCallback;
+import com.zijing.schoolonline.callback.MyCallback;
 
-import okhttp3.Call;
+import okhttp3.CookieJar;
 import okhttp3.MediaType;
 
 public class UserModelImpl implements UserModel {
+
+    private SharedPreferences preferences = ApplicationParam.myContext.getSharedPreferences(ApplicationParam.SP_NAME, Context.MODE_PRIVATE);
+    private SharedPreferences.Editor editor = preferences.edit();
     private User user;
 
     @Override
-    public void userLoginData(String phone, String password, final LoginCallBack loginCallBack) {
-        user = new User();
-        user.setUserPhone(phone);
-        user.setUserPassword(password);
-        Log.v("userLoginData: user", user.toString());
-        OkHttpUtils.postString().url(ApplicationParam.USER_LOGIN_API)
-                .content(new Gson().toJson(user))
-                .mediaType(MediaType.parse("application/json; charset=utf-8"))
-                .build().execute(new UserCallback() {
+    public void userLoginData(String phone, String pwd, final MyCallback myCallback) {
+        OkHttpUtils.post().url(ApplicationParam.USER_LOGIN_API)
+                .addParams("userPhone", phone)
+                .addParams("userPassword", pwd)
+                .build().execute(new MessageCallback() {
             @Override
-            public void onError(Call call, Exception e, int id) {
-                loginCallBack.onFailed();
-            }
-
-            @Override
-            public void onResponse(User user1, int id) {
-                loginCallBack.onSuccess(user1);
+            public void onResponse(Message message, int id) {
+                if (message.getStatus() == 0) {
+                    myCallback.onSuccess(message.getData());
+                } else {
+                    myCallback.onFailed(message.getData());
+                }
             }
         });
     }
 
     @Override
-    public void userRegisterData(String phone, String pwd, final RegisterCallBack registerCallBack) {
+    public void userRegisterData(String phone, String pwd, final MyCallback myCallback) {
         user = new User();
         user.setUserPhone(phone);
         user.setUserPassword(pwd);
@@ -51,23 +51,18 @@ public class UserModelImpl implements UserModel {
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build().execute(new MessageCallback() {
             @Override
-            public void onError(Call call, Exception e, int id) {
-                registerCallBack.onError();
-            }
-
-            @Override
             public void onResponse(Message message, int id) {
                 if (message.getStatus() == 500) {
-                    registerCallBack.onFailed(message);
+                    myCallback.onFailed(message.getData());
                 } else if (message.getStatus() == 0) {
-                    registerCallBack.onSuccess();
+                    myCallback.onSuccess(message.getData());
                 }
             }
         });
     }
 
     @Override
-    public void userFindData(String phone, String pwd, final RegisterCallBack registerCallBack) {
+    public void userFindData(String phone, String pwd, final MyCallback myCallback) {
         user = new User();
         user.setUserPhone(phone);
         user.setUserPassword(pwd);
@@ -77,83 +72,67 @@ public class UserModelImpl implements UserModel {
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build().execute(new MessageCallback() {
             @Override
-            public void onError(Call call, Exception e, int id) {
-                registerCallBack.onError();
-            }
-
-            @Override
             public void onResponse(Message message, int id) {
                 if (message.getStatus() == 500) {
-                    registerCallBack.onFailed(message);
+                    myCallback.onFailed(message.getData());
                 } else if (message.getStatus() == 0) {
-                    registerCallBack.onSuccess();
+                    myCallback.onSuccess(message.getData());
                 }
             }
         });
     }
 
     @Override
-    public void userLogOutData(String phone, final RegisterCallBack registerCallBack) {
-        Log.v("phone::::::::::", phone);
-        OkHttpUtils.post().url(ApplicationParam.USER_LOGOUT_API).addParams("userPhone", phone)
+    public void getUserInfoData(final MainCallback mainCallback) {
+        OkHttpUtils.get().url(ApplicationParam.USER_GETUSER_API)
                 .build().execute(new MessageCallback() {
             @Override
-            public void onError(Call call, Exception e, int id) {
-                registerCallBack.onError();
-            }
-
-            @Override
             public void onResponse(Message message, int id) {
-                if (message.getStatus() == 500) {
-                    registerCallBack.onFailed(message);
-                } else if (message.getStatus() == 0) {
-                    registerCallBack.onSuccess();
+                if (message.getStatus() == 0) {
+                    User user = new Gson().fromJson(message.getData(), User.class);
+                    Log.v("getUser", user.toString());
+                    editor.putString("name", user.getUserName());
+                    editor.putString("phone", user.getUserPhone());
+                    editor.putString("autograph", user.getUserAutograph());
+                    if (null != user.getWater()) {
+                        editor.putInt("waterId", user.getWater().getWaterId());
+                        editor.putString("waterMoney", user.getWater().getWaterMoney() + "");
+                    } else {
+                        editor.putInt("waterId", 0);
+                        editor.putString("waterMoney", "");
+                    }
+                    if (null != user.getRoom()) {
+                        editor.putInt("roomId", user.getRoom().getRoomId());
+                        editor.putString("room", user.getRoom().getRoomArea() + "-" + user.getRoom().getRoomDoorplate());
+                    } else {
+                        editor.putInt("roomId", 0);
+                        editor.putString("room", "");
+                    }
+                    editor.commit();
+                    mainCallback.onSuccess(message.getData());
+                } else if (message.getStatus() == 200) {
+                    mainCallback.onFailed(message.getData());
+                } else {
+                    mainCallback.onError("登录失效，请重新登录");
                 }
             }
         });
     }
 
     @Override
-    public void userGetUser(String phone, final RegisterCallBack registerCallBack) {
-        Log.v("userGetUser::::::::::", phone);
-        OkHttpUtils.post().url(ApplicationParam.USER_GETUSER_API).addParams("userPhone", phone)
+    public void userLogOutData(final MyCallback myCallback) {
+        OkHttpUtils.get().url(ApplicationParam.USER_LOGOUT_API)
                 .build().execute(new MessageCallback() {
             @Override
-            public void onError(Call call, Exception e, int id) {
-                registerCallBack.onError();
-            }
-
-            @Override
             public void onResponse(Message message, int id) {
-                Log.v("UserModelImpl::::::", message.toString());
-                if (message.getStatus() == 500) {
-                    registerCallBack.onFailed(message);
+                if (message.getStatus() == 500) {//清空session
+                    CookieJar cookieJar = OkHttpUtils.getInstance().getOkHttpClient().cookieJar();
+                    if (cookieJar instanceof CookieJarImpl) {
+                        ((CookieJarImpl) cookieJar).getCookieStore().removeAll();
+                    }
+                    myCallback.onFailed(message);
                 } else if (message.getStatus() == 0) {
-                    registerCallBack.onSuccess();
-                } else if (message.getStatus() == 400) {
-                    registerCallBack.onFailed(message);
-                }
-            }
-        });
-    }
-
-    @Override
-    public void airRechargeData(int roomId, int money, final RegisterCallBack registerCallBack) {
-        OkHttpUtils.postString().url(ApplicationParam.AIR_RECHARGE_API)
-                .content(new Gson().toJson(user))
-                .mediaType(MediaType.parse("application/json; charset=utf-8"))
-                .build().execute(new MessageCallback() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                registerCallBack.onError();
-            }
-
-            @Override
-            public void onResponse(Message message, int id) {
-                if (message.getStatus() == 500) {
-                    registerCallBack.onFailed(message);
-                } else if (message.getStatus() == 0) {
-                    registerCallBack.onSuccess();
+                    myCallback.onSuccess(message.getData());
                 }
             }
         });

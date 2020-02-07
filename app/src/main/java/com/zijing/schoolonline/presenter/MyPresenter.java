@@ -16,5 +16,5 @@ public interface MyPresenter {
 
     void waterRecharge(Integer waterId, int money);
 
-    void getUserAllRecharge(int userId);
+    void getUserAllRecharge();
 }
