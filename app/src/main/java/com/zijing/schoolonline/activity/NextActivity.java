@@ -2,6 +2,7 @@ package com.zijing.schoolonline.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -22,15 +23,22 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.zijing.schoolonline.ApplicationParam;
+import com.zijing.schoolonline.MainActivity;
 import com.zijing.schoolonline.R;
+import com.zijing.schoolonline.presenter.UserPresenter;
+import com.zijing.schoolonline.presenter.UserPresenterImpl;
 import com.zijing.schoolonline.util.RegexUtil;
 import com.zijing.schoolonline.util.ToastUtil;
+import com.zijing.schoolonline.view.MyView;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
-public class NextActivity extends AppCompatActivity implements View.OnClickListener {
+public class NextActivity extends AppCompatActivity implements View.OnClickListener, MyView {
 
+    private SharedPreferences preferences = ApplicationParam.myContext.getSharedPreferences(ApplicationParam.SP_NAME,
+            ApplicationParam.myContext.MODE_PRIVATE);
+    private UserPresenter userPresenter;
     public static AppCompatActivity activity;
     private Context context;
 
@@ -61,6 +69,7 @@ public class NextActivity extends AppCompatActivity implements View.OnClickListe
         }
         // 注册一个事件回调，用于处理SMSSDK接口请求的结果
         SMSSDK.registerEventHandler(eventHandler);
+        userPresenter = new UserPresenterImpl(this);
         activity = this;
         context = this;
         initView();
@@ -201,8 +210,7 @@ public class NextActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 case 2:
                     if (updatePhone != 0) {
-                        Toast.makeText(NextActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
-                        finish();
+                        userPresenter.alterPhone(phone);
                     } else {
                         Intent intent = new Intent();
                         intent.putExtra("phone", phone);
@@ -219,7 +227,6 @@ public class NextActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 case 5:
                     ToastUtil.l(NextActivity.this, "请检查网络");
-//                    Toast.makeText(NextActivity.this, "", Toast.LENGTH_SHORT).show();
                     break;
             }
         }
@@ -251,8 +258,25 @@ public class NextActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    public void onSuccess(Object object) {
+        Toast.makeText(NextActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.commit();
+        MainActivity.compatActivity.finish();
+        startActivity(new Intent(context, MainActivity.class));
+        finish();
+    }
+
+    @Override
+    public void onFailed(Object object) {
+        Toast.makeText(NextActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         SMSSDK.unregisterEventHandler(eventHandler);
+        userPresenter.onDestroy();
     }
 }

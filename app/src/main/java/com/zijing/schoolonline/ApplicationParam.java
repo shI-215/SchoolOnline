@@ -2,9 +2,11 @@ package com.zijing.schoolonline;
 
 import android.app.Application;
 
+import com.franmontiel.persistentcookiejar.ClearableCookieJar;
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.cookie.CookieJarImpl;
-import com.zhy.http.okhttp.cookie.store.PersistentCookieStore;
 import com.zijing.schoolonline.util.ToastUtil;
 
 import java.util.concurrent.TimeUnit;
@@ -12,6 +14,10 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 
 public class ApplicationParam extends Application {
+
+    public static final int STATUS_SUCCESS = 0;
+    public static final int STATUS_FAILED = 200;
+    public static final int STATUS_ERROR = 400;
 
     public static ApplicationParam myContext;
     public static String SP_NAME = "user";
@@ -23,24 +29,18 @@ public class ApplicationParam extends Application {
     public static final String ELECT_RECHARGE_VALUE = "电费充值";
     public static final String WATER_RECHARGE_VALUE = "水费充值";
 
-    public static final String LOGIN_ERROR = "登录失效，请重新登陆";
-
     //    国家
     public static final String MOB_COUNTRY = "86";
 
-    //    用户手机
-    public static String USER_PHONE = "";
-    //    宿舍信息
-    public static String ROOM_INFORMATION = "";
-
     //    URL
-    public static final String SCHOOL_URL = "http://192.168.43.196:8080/School";//开发版
-    //    public static final String SCHOOL_URL = "http://121.41.88.233:20200/School";//生产版
+//    public static final String SCHOOL_URL = "http://192.168.43.196:8080/School";//开发版
+        public static final String SCHOOL_URL = "http://121.41.88.233:20200/School";//生产版
     //    用户
     public static final String USER_LOGIN_API = SCHOOL_URL + "/user/userLogin";
     public static final String USER_REGISTER_API = SCHOOL_URL + "/user/userRegister";
     public static final String USER_FIND_API = SCHOOL_URL + "/user/userFind";
     public static final String USER_LOGOUT_API = SCHOOL_URL + "/user/userLogOut";
+    public static final String USER_ALTERPHONE_API = SCHOOL_URL + "/user/alterPhone";
     public static final String USER_GETUSER_API = SCHOOL_URL + "/user/getUser";
     public static final String USER_BINDINGROOM_API = SCHOOL_URL + "/user/bindingRoom";
     //    宿舍
@@ -68,7 +68,7 @@ public class ApplicationParam extends Application {
     }
 
     private void initOkhttp() {
-        CookieJarImpl cookieJar = new CookieJarImpl(new PersistentCookieStore(getApplicationContext()));
+        ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(this));
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .cookieJar(cookieJar)
                 .connectTimeout(10000L, TimeUnit.MILLISECONDS)

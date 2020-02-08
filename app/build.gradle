@@ -38,6 +38,8 @@ dependencies {
     implementation 'com.zhy:okhttputils:2.6.2'
     //Gson
     implementation 'com.google.code.gson:gson:2.8.6'
+    //cookie
+    implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
 }
 
 MobSDK {

@@ -91,12 +91,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    protected void onDestroy() {
-        userPresenter.onDestroy();
-        super.onDestroy();
-    }
-
-    @Override
     public void onSuccess(Object object) {
         startActivity(new Intent(context, MainActivity.class));
         finish();
@@ -105,5 +99,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onFailed(Object object) {
         ToastUtil.l(object.toString());
+    }
+
+    @Override
+    protected void onDestroy() {
+        userPresenter.onDestroy();
+        super.onDestroy();
     }
 }

@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,9 +41,7 @@ public class RechargeAdapter extends RecyclerView.Adapter<RechargeAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 int position = holder.getPosition();
-//                selectIndex = position;
                 setSelectedIndex(position);
-                Toast.makeText(v.getContext(), list.get(position) + "" + selectIndex, Toast.LENGTH_SHORT).show();
             }
         });
         return holder;
@@ -54,7 +51,7 @@ public class RechargeAdapter extends RecyclerView.Adapter<RechargeAdapter.ViewHo
     public void onBindViewHolder(@NonNull RechargeAdapter.ViewHolder holder, int position) {
         holder.tv_item.setText(list.get(position));
         if (selectIndex == position) {
-            holder.tv_item.setBackgroundColor(Color.RED);           //选中状态
+            holder.tv_item.setBackgroundResource(R.drawable.selected);        //选中状态
         } else {                                                            //非选中状态
             holder.tv_item.setBackgroundColor(Color.WHITE);
         }

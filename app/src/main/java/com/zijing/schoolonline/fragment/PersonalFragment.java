@@ -30,7 +30,7 @@ import com.zijing.schoolonline.view.MyView;
 
 public class PersonalFragment extends Fragment implements View.OnClickListener, MyView {
 
-    SharedPreferences preferences = ApplicationParam.myContext.getSharedPreferences(ApplicationParam.SP_NAME,
+    private SharedPreferences preferences = ApplicationParam.myContext.getSharedPreferences(ApplicationParam.SP_NAME,
             ApplicationParam.myContext.MODE_PRIVATE);
     private UserPresenter userPresenter;
 

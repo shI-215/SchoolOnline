@@ -57,7 +57,7 @@ public class RoomModelImpl implements RoomModel {
                 .execute(new MessageCallback() {
                     @Override
                     public void onResponse(Message message, int id) {
-                        if (message.getStatus() == 0) {
+                        if (message.getStatus() == ApplicationParam.STATUS_SUCCESS) {
                             List<Object> list = new ArrayList<>();
                             listCallBack.onSuccess(list);
                         } else {
@@ -76,7 +76,7 @@ public class RoomModelImpl implements RoomModel {
                 .execute(new MessageCallback() {
                     @Override
                     public void onResponse(Message message, int id) {
-                        if (message.getStatus() == 0) {
+                        if (message.getStatus() == ApplicationParam.STATUS_SUCCESS) {
                             Log.v("room", message.getData());
                             Room room = new Gson().fromJson(message.getData(), Room.class);
                             Log.v("room", room.toString());

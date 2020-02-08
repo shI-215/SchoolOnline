@@ -10,4 +10,6 @@ public interface UserPresenter {
     void userLogOut();
 
     void onDestroy();
+
+    void alterPhone(String phone);
 }

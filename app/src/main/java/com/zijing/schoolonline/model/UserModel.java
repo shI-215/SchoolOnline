@@ -13,4 +13,6 @@ public interface UserModel {
     void getUserInfoData(final MainCallback mainCallback);
 
     void userLogOutData(final MyCallback myCallback);
+
+    void alterPhoneData(String phone, final MyCallback myCallback);
 }

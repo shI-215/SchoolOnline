@@ -23,6 +23,7 @@ import com.zijing.schoolonline.bean.Elect;
 import com.zijing.schoolonline.bean.Water;
 import com.zijing.schoolonline.presenter.MyPresenter;
 import com.zijing.schoolonline.presenter.MyPresenterImpl;
+import com.zijing.schoolonline.util.ToastUtil;
 import com.zijing.schoolonline.view.MyView;
 
 import java.util.ArrayList;
@@ -65,6 +66,16 @@ public class RechargeActivity extends AppCompatActivity implements View.OnClickL
         }
         titleRecharge = getIntent().getIntExtra("titleRecharge", 0);
         myPresenter = new MyPresenterImpl(this);
+        initTitle();
+        initView();
+        context = this;
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        rv_recharge.setLayoutManager(layoutManager);
+        rechargeAdapter = new RechargeAdapter(list);
+        rv_recharge.setAdapter(rechargeAdapter);
+    }
+
+    private void initTitle() {
         if (titleRecharge == 1) {
             setTitle(ApplicationParam.AIR_RECHARGE_VALUE);
             new Thread() {
@@ -98,12 +109,6 @@ public class RechargeActivity extends AppCompatActivity implements View.OnClickL
                 }
             }.start();
         }
-        initView();
-        context = this;
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-        rv_recharge.setLayoutManager(layoutManager);
-        rechargeAdapter = new RechargeAdapter(list);
-        rv_recharge.setAdapter(rechargeAdapter);
     }
 
     private void initView() {
@@ -134,15 +139,19 @@ public class RechargeActivity extends AppCompatActivity implements View.OnClickL
             case R.id.btn_recharge:
                 index = rechargeAdapter.getPositionIndex();
                 isRecharge = true;
-                if (titleRecharge == 1) {//空调充值
-                    Log.v("air", air.getAirId() + " " + money[index]);
-                    myPresenter.airRecharge(air.getAirId(), money[index]);
-                } else if (titleRecharge == 2) {//电费充值
-                    Log.v("elect", elect.getElectId() + " " + money[index]);
-                    myPresenter.electRecharge(elect.getElectId(), money[index]);
-                } else if (titleRecharge == 3) {//水费充值
-                    Log.v("water", water.getWaterId() + " " + money[index]);
-                    myPresenter.waterRecharge(water.getWaterId(), money[index]);
+                if (index == -1) {
+                    ToastUtil.l("请选择充值金额");
+                } else {
+                    if (titleRecharge == 1) {//空调充值
+                        Log.v("air", air.getAirId() + " " + money[index]);
+                        myPresenter.airRecharge(air.getAirId(), money[index]);
+                    } else if (titleRecharge == 2) {//电费充值
+                        Log.v("elect", elect.getElectId() + " " + money[index]);
+                        myPresenter.electRecharge(elect.getElectId(), money[index]);
+                    } else if (titleRecharge == 3) {//水费充值
+                        Log.v("water", water.getWaterId() + " " + money[index]);
+                        myPresenter.waterRecharge(water.getWaterId(), money[index]);
+                    }
                 }
                 break;
         }
@@ -177,6 +186,9 @@ public class RechargeActivity extends AppCompatActivity implements View.OnClickL
             }
         } else {
             Toast.makeText(context, object.toString(), Toast.LENGTH_LONG).show();
+            isRecharge = false;
+            rechargeAdapter.setSelectedIndex(-1);
+            initTitle();
         }
     }
 
@@ -187,5 +199,11 @@ public class RechargeActivity extends AppCompatActivity implements View.OnClickL
         } else {
             Toast.makeText(context, "充值失败", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        myPresenter.onDestroy();
     }
 }

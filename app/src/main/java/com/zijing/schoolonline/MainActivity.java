@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @Override
     public void onSuccess(Object object) {
         Log.v("get", object.toString());
-        ToastUtil.l(object.toString());
     }
 
     @Override

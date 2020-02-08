@@ -15,11 +15,6 @@ public class MyPresenterImpl implements MyPresenter, MyCallback<Object> {
     }
 
     @Override
-    public void onDestroy() {
-        myView = null;
-    }
-
-    @Override
     public void getAirInfo(int roomId) {
         myModel.getAirInfoData(roomId, this);
     }
@@ -32,6 +27,11 @@ public class MyPresenterImpl implements MyPresenter, MyCallback<Object> {
     @Override
     public void getWaterInfo(int waterId) {
         myModel.getWaterInfoData(waterId, this);
+    }
+
+    @Override
+    public void getUserAllRecharge() {
+        myModel.getUserAllRechargeData(this);
     }
 
     @Override
@@ -50,11 +50,6 @@ public class MyPresenterImpl implements MyPresenter, MyCallback<Object> {
     }
 
     @Override
-    public void getUserAllRecharge() {
-        myModel.getUserAllRechargeData(this);
-    }
-
-    @Override
     public void onSuccess(Object object) {
         if (myView != null) {
             myView.onSuccess(object);
@@ -66,5 +61,10 @@ public class MyPresenterImpl implements MyPresenter, MyCallback<Object> {
         if (myView != null) {
             myView.onFailed(object);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        myView = null;
     }
 }

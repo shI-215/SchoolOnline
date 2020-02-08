@@ -23,7 +23,7 @@ public class MyModelImpl implements MyModel {
                 .execute(new MessageCallback() {
                     @Override
                     public void onResponse(Message message, int id) {
-                        if (message.getStatus() == 0) {
+                        if (message.getStatus() == ApplicationParam.STATUS_SUCCESS) {
                             myCallback.onSuccess(new Gson().fromJson(message.getData(), Air.class));
                         } else {
                             myCallback.onFailed("");
@@ -39,7 +39,7 @@ public class MyModelImpl implements MyModel {
                 .execute(new MessageCallback() {
                     @Override
                     public void onResponse(Message message, int id) {
-                        if (message.getStatus() == 0) {
+                        if (message.getStatus() == ApplicationParam.STATUS_SUCCESS) {
                             myCallback.onSuccess(new Gson().fromJson(message.getData(), Elect.class));
                         } else {
                             myCallback.onFailed("");
@@ -55,7 +55,7 @@ public class MyModelImpl implements MyModel {
                 .execute(new MessageCallback() {
                     @Override
                     public void onResponse(Message message, int id) {
-                        if (message.getStatus() == 0) {
+                        if (message.getStatus() == ApplicationParam.STATUS_SUCCESS) {
                             myCallback.onSuccess(new Gson().fromJson(message.getData(), Water.class));
                         } else {
                             myCallback.onFailed("");
@@ -75,10 +75,10 @@ public class MyModelImpl implements MyModel {
                 .build().execute(new MessageCallback() {
             @Override
             public void onResponse(Message message, int id) {
-                if (message.getStatus() == 0) {
-                    myCallback.onSuccess(message);
+                if (message.getStatus() == ApplicationParam.STATUS_SUCCESS) {
+                    myCallback.onSuccess(message.getData());
                 } else {
-                    myCallback.onFailed(message.getMsg());
+                    myCallback.onFailed(message.getData());
                 }
             }
         });
@@ -95,10 +95,10 @@ public class MyModelImpl implements MyModel {
                 .build().execute(new MessageCallback() {
             @Override
             public void onResponse(Message message, int id) {
-                if (message.getStatus() == 0) {
-                    myCallback.onSuccess(message);
+                if (message.getStatus() == ApplicationParam.STATUS_SUCCESS) {
+                    myCallback.onSuccess(message.getData());
                 } else {
-                    myCallback.onFailed(message.getMsg());
+                    myCallback.onFailed(message.getData());
                 }
             }
         });
@@ -116,10 +116,10 @@ public class MyModelImpl implements MyModel {
                 .build().execute(new MessageCallback() {
             @Override
             public void onResponse(Message message, int id) {
-                if (message.getStatus() == 0) {
-                    myCallback.onSuccess(message);
+                if (message.getStatus() == ApplicationParam.STATUS_SUCCESS) {
+                    myCallback.onSuccess(message.getData());
                 } else {
-                    myCallback.onFailed(message.getMsg());
+                    myCallback.onFailed(message.getData());
                 }
             }
         });

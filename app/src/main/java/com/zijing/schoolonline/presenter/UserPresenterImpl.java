@@ -35,6 +35,11 @@ public class UserPresenterImpl implements UserPresenter, MyCallback<Object> {
     }
 
     @Override
+    public void alterPhone(String phone) {
+        userModel.alterPhoneData(phone, this);
+    }
+
+    @Override
     public void onSuccess(Object object) {
         if (myView != null) {
             myView.onSuccess(object);
