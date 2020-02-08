@@ -40,6 +40,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     //cookie
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+    //    ShadowLayout
+//    implementation 'com.github.lihangleo2:ShadowLayout:2.0.1'
 }
 
 MobSDK {

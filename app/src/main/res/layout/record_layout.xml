@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="5dp"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:paddingTop="5dp">
 
     <TextView
         android:id="@+id/tv_account"
@@ -11,23 +11,23 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:text="账户"
-        android:textSize="25sp" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_account"
-        android:text="日期"
-        android:textSize="20sp" />
+        android:text="日期" />
 
     <TextView
         android:id="@+id/tv_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="充值类型"
-        android:textSize="20sp" />
+        android:layout_marginTop="5dp"
+        android:textColor="#03A9F4"
+        android:text="充值类型" />
 
     <TextView
         android:id="@+id/tv_amount"
@@ -36,5 +36,5 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:text="金额"
-        android:textSize="30sp" />
+        android:textSize="25sp" />
 </RelativeLayout>
