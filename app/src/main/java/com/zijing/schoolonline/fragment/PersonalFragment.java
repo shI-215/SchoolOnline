@@ -71,19 +71,19 @@ public class PersonalFragment extends Fragment implements View.OnClickListener, 
         phone = preferences.getString("phone", "");
         String room = preferences.getString("room", "");
         tv_user_name.setText(name);
-        cl_phone.setText("电话", phone, "", 0, true);
+        cl_phone.setText(R.drawable.ic_phone, "电话", phone, "", 0, true);
         cl_phone.setOnClickListener(this);
         tv_user_signature.setText((String) SharedPreferencesUtil.get(getActivity(), "userAutograph", "走自己的路，让别人去说吧。"));
         if (TextUtils.isEmpty(room)) {
-            cl_room.setText("宿舍", "宿舍认证", "", 1, true);
+            cl_room.setText(R.drawable.ic_room, "宿舍", "宿舍认证", "", 1, true);
             cl_room.setEnabled(true);
         } else {
-            cl_room.setText("宿舍", room, "", 0, false);
+            cl_room.setText(R.drawable.ic_room, "宿舍", room, "", 0, false);
             cl_room.setEnabled(false);
         }
         String versionName = VersionCodeUtil.getVerName(getContext());
-        cl_version.setText("版本", versionName, "", 0, false);
-        cl_version_update.setText("检查更新", "", "", 0, false);
+        cl_version.setText(R.drawable.ic_version, "版本", versionName, "", 0, false);
+        cl_version_update.setText(R.drawable.ic_update, "检查更新", "", "", 0, false);
 
         cl_room.setOnClickListener(this);
         btn_unlogin.setOnClickListener(this);

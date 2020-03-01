@@ -10,7 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#fff"
-        android:padding="10dp">
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="20dp">
 
         <ImageView
             android:id="@+id/iv_user_image"
@@ -53,7 +57,8 @@
     <com.zijing.schoolonline.layout.ClickLayout
         android:id="@+id/cl_version"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp" />
 
     <com.zijing.schoolonline.layout.ClickLayout
         android:id="@+id/cl_version_update"
@@ -65,9 +70,10 @@
         android:id="@+id/btn_unlogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="15dp"
+        android:background="#81D4FA"
         android:text="退出登录"
         android:textColor="#fff"
         android:textSize="20sp" />

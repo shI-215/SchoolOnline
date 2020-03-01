@@ -2,6 +2,7 @@ package com.zijing.schoolonline.layout;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
@@ -22,8 +23,11 @@ public class ClickLayout extends RelativeLayout {
         LayoutInflater.from(context).inflate(R.layout.click_layout, this);
     }
 
-    public ClickLayout setText(String tag, String left_content, String right_content, int contentColor, boolean isShow) {
+    public ClickLayout setText(int ico, String tag, String left_content, String right_content, int contentColor, boolean isShow) {
         init();
+        Drawable drawableLeft = getResources().getDrawable(ico);
+        drawableLeft.setBounds(0, 0, drawableLeft.getMinimumWidth(), drawableLeft.getMinimumHeight());
+        tv_tag.setCompoundDrawables(drawableLeft, null, null, null);
         tv_tag.setText(tag);
         tv_left_content.setText(left_content);
         tv_right_content.setText(right_content);
