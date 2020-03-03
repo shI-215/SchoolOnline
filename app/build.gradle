@@ -6,8 +6,8 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.zijing.schoolonline"
-        minSdkVersion 15
-        targetSdkVersion 29
+        minSdkVersion 16
+        targetSdkVersion 28
         versionCode 1
         versionName '1.1.0'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -34,7 +34,7 @@ dependencies {
     //recyclerview
     implementation 'com.android.support:recyclerview-v7:29.0.0'
     //okhttp
-    implementation 'com.squareup.okhttp3:okhttp:4.3.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.4.0'
     implementation 'com.squareup.okio:okio:2.4.3'
     //okhttputils
     implementation 'com.zhy:okhttputils:2.6.2'
@@ -42,6 +42,10 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     //cookie
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+    //PhotoSelect
+    implementation 'com.github.OneGreenHand:PhotoSelect:v1.1'
+    //Glide框架
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
     //    ShadowLayout
 //    implementation 'com.github.lihangleo2:ShadowLayout:2.0.1'
 }

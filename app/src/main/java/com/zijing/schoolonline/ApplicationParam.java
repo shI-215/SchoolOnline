@@ -6,6 +6,7 @@ import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.ogh.library.OghApp;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zijing.schoolonline.util.ToastUtil;
 
@@ -33,8 +34,9 @@ public class ApplicationParam extends Application {
     public static final String MOB_COUNTRY = "86";
 
     //    URL
-//    public static final String SCHOOL_URL = "http://192.168.43.196:8080/School";//开发版
-    public static final String SCHOOL_URL = "http://106.12.118.56:20200/School";//生产版
+    public static final String SCHOOL_URL = "http://192.168.43.196:8080/School";//开发版
+//    public static final String SCHOOL_URL = "http://106.12.118.56:20200/School";//生产版
+
     //    用户
     public static final String USER_LOGIN_API = SCHOOL_URL + "/user/userLogin";
     public static final String USER_REGISTER_API = SCHOOL_URL + "/user/userRegister";
@@ -43,6 +45,10 @@ public class ApplicationParam extends Application {
     public static final String USER_ALTERPHONE_API = SCHOOL_URL + "/user/alterPhone";
     public static final String USER_GETUSER_API = SCHOOL_URL + "/user/getUser";
     public static final String USER_BINDINGROOM_API = SCHOOL_URL + "/user/bindingRoom";
+    //修改用户头像
+    public static final String USER_IMAGE_API = SCHOOL_URL + "/user/alterUserPicture";
+    //加载用户头像
+    public static final String USER_GET_IMAGE_API = SCHOOL_URL + "/user/alterUserPicture";
     //    宿舍
     public static final String ROOM_GETAREA_API = SCHOOL_URL + "/room/selectRoomArea";
     public static final String ROOM_GETDOORPLATE_API = SCHOOL_URL + "/room/selectRoomDoorplate";
@@ -65,6 +71,7 @@ public class ApplicationParam extends Application {
         myContext = this;
         ToastUtil.init(this);
         initOkhttp();
+        OghApp.init(this);
     }
 
     private void initOkhttp() {

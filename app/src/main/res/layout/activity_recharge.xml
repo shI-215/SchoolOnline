@@ -65,7 +65,9 @@
         android:id="@+id/btn_recharge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="15dp"
+        android:background="#81D4FA"
+        android:foreground="?android:attr/selectableItemBackground"
         android:text="充值"
         android:textColor="#fff"
         android:textSize="20sp" />

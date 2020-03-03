@@ -1,5 +1,6 @@
 package com.zijing.schoolonline.adapter;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +52,13 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         Log.v("RecordAdapter", recharge.toString());
         holder.tv_account.setText(recharge.getRechargeAccount());
         holder.tv_amount.setText("+" + recharge.getRechargeMoney());
+        if (TextUtils.equals(recharge.getRechargeType(), "电费")) {
+            holder.tv_type.setBackgroundResource(R.drawable.ic_round_elect);
+        } else if (TextUtils.equals(recharge.getRechargeType(), "水费")) {
+            holder.tv_type.setBackgroundResource(R.drawable.ic_round_water);
+        } else if (TextUtils.equals(recharge.getRechargeType(), "空调")) {
+            holder.tv_type.setBackgroundResource(R.drawable.ic_round_air);
+        }
         holder.tv_type.setText(recharge.getRechargeType());
         holder.tv_time.setText(recharge.getRechargeDate());
     }

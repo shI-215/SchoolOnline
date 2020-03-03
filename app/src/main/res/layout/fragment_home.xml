@@ -10,10 +10,11 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#BCBCBC"
-        app:title="校园在线"
-        app:titleTextColor="#fff" />
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginBottom="20dp"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:title="校园在线" />
 
     <com.zijing.schoolonline.layout.CardLayout
         android:id="@+id/cl_air"

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.ogh.library.photos.IPhotoResult;
+import com.ogh.library.photos.TakePhotoDialog;
 import com.zijing.schoolonline.ApplicationParam;
 import com.zijing.schoolonline.MainActivity;
 import com.zijing.schoolonline.R;
@@ -22,18 +26,25 @@ import com.zijing.schoolonline.activity.LoginActivity;
 import com.zijing.schoolonline.activity.NextActivity;
 import com.zijing.schoolonline.activity.RoomActivity;
 import com.zijing.schoolonline.layout.ClickLayout;
+import com.zijing.schoolonline.presenter.PicturePresenter;
+import com.zijing.schoolonline.presenter.PicturePresenterImpl;
 import com.zijing.schoolonline.presenter.UserPresenter;
 import com.zijing.schoolonline.presenter.UserPresenterImpl;
 import com.zijing.schoolonline.util.SharedPreferencesUtil;
+import com.zijing.schoolonline.util.ToastUtil;
 import com.zijing.schoolonline.util.VersionCodeUtil;
 import com.zijing.schoolonline.view.MyView;
+import com.zijing.schoolonline.view.PictureListening;
 
-public class PersonalFragment extends Fragment implements View.OnClickListener, MyView {
+import java.io.File;
+
+public class PersonalFragment extends Fragment implements View.OnClickListener, MyView, PictureListening {
 
     private SharedPreferences preferences = ApplicationParam.myContext.getSharedPreferences(ApplicationParam.SP_NAME,
             ApplicationParam.myContext.MODE_PRIVATE);
     private UserPresenter userPresenter;
-
+    private PicturePresenter picturePresenter;
+    private TakePhotoDialog takePhotoDialog;
     private String phone;
 
     private ImageView iv_user_image;
@@ -48,6 +59,7 @@ public class PersonalFragment extends Fragment implements View.OnClickListener, 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_personal, container, false);
         userPresenter = new UserPresenterImpl(this);
+        picturePresenter = new PicturePresenterImpl(this);
         return view;
     }
 
@@ -59,14 +71,21 @@ public class PersonalFragment extends Fragment implements View.OnClickListener, 
 
     private void initView() {
         iv_user_image = (ImageView) getActivity().findViewById(R.id.iv_user_image);
+        iv_user_image.setOnClickListener(this);
         tv_user_name = (TextView) getActivity().findViewById(R.id.tv_user_name);
         tv_user_signature = (TextView) getActivity().findViewById(R.id.tv_user_signature);
         cl_phone = (ClickLayout) getActivity().findViewById(R.id.cl_phone);
         cl_room = (ClickLayout) getActivity().findViewById(R.id.cl_room);
+        cl_room.setOnClickListener(this);
         cl_version = (ClickLayout) getActivity().findViewById(R.id.cl_version);
         cl_version_update = (ClickLayout) getActivity().findViewById(R.id.cl_version_update);
         btn_unlogin = (Button) getActivity().findViewById(R.id.btn_unlogin);
+        btn_unlogin.setOnClickListener(this);
 
+        String picture = preferences.getString("picture", "");
+        Log.v("picture", picture);
+        Glide.with(getContext()).load(ApplicationParam.SCHOOL_URL + picture)
+                .error(R.drawable.picture).into(iv_user_image);
         String name = preferences.getString("name", "");
         phone = preferences.getString("phone", "");
         String room = preferences.getString("room", "");
@@ -84,14 +103,17 @@ public class PersonalFragment extends Fragment implements View.OnClickListener, 
         String versionName = VersionCodeUtil.getVerName(getContext());
         cl_version.setText(R.drawable.ic_version, "版本", versionName, "", 0, false);
         cl_version_update.setText(R.drawable.ic_update, "检查更新", "", "", 0, false);
-
-        cl_room.setOnClickListener(this);
-        btn_unlogin.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.iv_user_image:
+                takePhotoDialog = new TakePhotoDialog(this);
+                takePhotoDialog.isCrop(true);//裁剪
+                takePhotoDialog.isCompress(true);//压缩
+                takePhotoDialog.takePhoto();
+                break;
             case R.id.cl_phone:
                 Intent intent = new Intent();
                 intent.setClass(getContext(), NextActivity.class);
@@ -120,5 +142,30 @@ public class PersonalFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onFailed(Object object) {
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        takePhotoDialog.onPhotoResult(requestCode, resultCode, data, new IPhotoResult() {
+            @Override
+            public void onResult(File file, String path) {
+                picturePresenter.alterPicture(file);
+            }
+        });
+    }
+
+    @Override
+    public void onSuccess(String string) {
+        String path = ApplicationParam.SCHOOL_URL + string;
+        Log.v("PersonalFragment------>", path);
+        Glide.with(getContext()).load(path)
+                .error(R.drawable.picture)
+                .into(iv_user_image);
+    }
+
+    @Override
+    public void onFailed(String string) {
+        ToastUtil.l(string);
     }
 }

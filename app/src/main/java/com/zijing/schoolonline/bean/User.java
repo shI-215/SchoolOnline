@@ -11,6 +11,7 @@ public class User {
      * userName : hello
      * userPassword : 12345678900
      * userPhone : 13798001140
+     * userPicture : /images/1583208709574.png
      * userSex : 男
      * water : {"waterId":202010101,"waterMoney":0}
      */
@@ -21,6 +22,7 @@ public class User {
     private String userName;
     private String userPassword;
     private String userPhone;
+    private String userPicture;
     private String userSex;
     private Room room;
     private Water water;
@@ -34,6 +36,7 @@ public class User {
                 ", userName='" + userName + '\'' +
                 ", userPassword='" + userPassword + '\'' +
                 ", userPhone='" + userPhone + '\'' +
+                ", userPicture='" + userPicture + '\'' +
                 ", userSex='" + userSex + '\'' +
                 ", room=" + room +
                 ", water=" + water +
@@ -86,6 +89,14 @@ public class User {
 
     public void setUserPhone(String userPhone) {
         this.userPhone = userPhone;
+    }
+
+    public String getUserPicture() {
+        return userPicture;
+    }
+
+    public void setUserPicture(String userPicture) {
+        this.userPicture = userPicture;
     }
 
     public String getUserSex() {

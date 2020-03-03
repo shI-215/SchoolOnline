@@ -14,12 +14,12 @@
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:paddingEnd="10dp"
-        android:paddingBottom="20dp">
+        android:paddingBottom="15dp">
 
         <ImageView
             android:id="@+id/iv_user_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_margin="5dp"
             android:src="@drawable/picture" />
@@ -28,7 +28,7 @@
             android:id="@+id/tv_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:layout_toRightOf="@id/iv_user_image"
             android:text="2019"
             android:textSize="20sp" />
@@ -46,7 +46,8 @@
         android:id="@+id/cl_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:foreground="?android:attr/selectableItemBackground" />
 
     <com.zijing.schoolonline.layout.ClickLayout
         android:id="@+id/cl_room"
@@ -64,16 +65,20 @@
         android:id="@+id/cl_version_update"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground" />
 
     <Button
         android:id="@+id/btn_unlogin"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="50dp"
         android:layout_marginRight="15dp"
         android:background="#81D4FA"
+        android:foreground="?android:attr/selectableItemBackground"
         android:text="退出登录"
         android:textColor="#fff"
         android:textSize="20sp" />

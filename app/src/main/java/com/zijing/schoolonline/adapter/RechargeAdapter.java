@@ -51,7 +51,7 @@ public class RechargeAdapter extends RecyclerView.Adapter<RechargeAdapter.ViewHo
     public void onBindViewHolder(@NonNull RechargeAdapter.ViewHolder holder, int position) {
         holder.tv_item.setText(list.get(position));
         if (selectIndex == position) {
-            holder.tv_item.setBackgroundResource(R.drawable.selected);        //选中状态
+            holder.tv_item.setBackgroundResource(R.drawable.select);        //选中状态
         } else {                                                            //非选中状态
             holder.tv_item.setBackgroundColor(Color.WHITE);
         }

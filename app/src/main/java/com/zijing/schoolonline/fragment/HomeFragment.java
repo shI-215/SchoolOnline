@@ -2,6 +2,7 @@ package com.zijing.schoolonline.fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -53,9 +54,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         cl_water = (CardLayout) getActivity().findViewById(R.id.cl_water);
         toolBar = (Toolbar) getActivity().findViewById(R.id.toolBar);
 
-        cl_air.setCard("空调", R.drawable.air);
-        cl_elect.setCard("电费", R.drawable.elect);
-        cl_water.setCard("水费", R.drawable.water);
+        cl_air.setCard(Color.parseColor("#C8E6C9"), "空调", R.drawable.air);
+        cl_elect.setCard(Color.parseColor("#D1C4E9"), "电费", R.drawable.elect);
+        cl_water.setCard(Color.parseColor("#BBDEFB"), "水费", R.drawable.water);
 
         cl_air.setOnClickListener(this);
         cl_elect.setOnClickListener(this);

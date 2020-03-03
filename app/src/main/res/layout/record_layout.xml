@@ -2,15 +2,31 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
-    android:paddingTop="5dp">
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tv_type"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/ic_round"
+        android:gravity="center"
+        android:text="充值类型"
+        android:textColor="#FFF"
+        android:textSize="20dp" />
 
     <TextView
         android:id="@+id/tv_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_marginLeft="60dp"
         android:text="账户"
+        android:textColor="#FF7043"
         android:textSize="20sp" />
 
     <TextView
@@ -18,16 +34,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_account"
-        android:text="日期" />
-
-    <TextView
-        android:id="@+id/tv_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:textColor="#03A9F4"
-        android:text="充值类型" />
+        android:layout_marginLeft="60dp"
+        android:text="日期"
+        android:textColor="#F48FB1" />
 
     <TextView
         android:id="@+id/tv_amount"
@@ -36,5 +45,6 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:text="金额"
+        android:textColor="#8BC34A"
         android:textSize="25sp" />
 </RelativeLayout>

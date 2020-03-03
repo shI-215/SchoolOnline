@@ -13,6 +13,9 @@ import com.zijing.schoolonline.bean.User;
 import com.zijing.schoolonline.callback.MainCallback;
 import com.zijing.schoolonline.callback.MessageCallback;
 import com.zijing.schoolonline.callback.MyCallback;
+import com.zijing.schoolonline.view.PictureListening;
+
+import java.io.File;
 
 import okhttp3.CookieJar;
 import okhttp3.MediaType;
@@ -42,7 +45,6 @@ public class UserModelImpl implements UserModel {
 
     @Override
     public void userRegisterData(String phone, String pwd, final MyCallback myCallback) {
-//        user = new User();
         user.setUserPhone(phone);
         user.setUserPassword(pwd);
         Log.v("userRegisterData: user", user.toString());
@@ -94,6 +96,12 @@ public class UserModelImpl implements UserModel {
                     editor.putString("name", user.getUserName());
                     editor.putString("phone", user.getUserPhone());
                     editor.putString("autograph", user.getUserAutograph());
+                    Log.v("UserPicture", user.getUserPicture());
+                    if (null != user.getUserPicture()) {
+                        editor.putString("picture", user.getUserPicture());
+                    } else {
+                        editor.putString("picture", "");
+                    }
                     if (null != user.getWater()) {
                         editor.putInt("waterId", user.getWater().getWaterId());
                         editor.putString("waterMoney", user.getWater().getWaterMoney() + "");
@@ -154,5 +162,23 @@ public class UserModelImpl implements UserModel {
                 }
             }
         });
+    }
+
+    @Override
+    public void alterPictureData(File file, final PictureListening pictureListening) {
+        OkHttpUtils.post()
+                .addFile("image", file.getName(), file)//图片
+                .url(ApplicationParam.USER_IMAGE_API)
+                .build()
+                .execute(new MessageCallback() {
+                    @Override
+                    public void onResponse(Message message, int id) {
+                        if (message.getStatus() == ApplicationParam.STATUS_FAILED) {
+                            pictureListening.onFailed(message.getData());
+                        } else if (message.getStatus() == ApplicationParam.STATUS_SUCCESS) {
+                            pictureListening.onSuccess(message.getData());
+                        }
+                    }
+                });
     }
 }
