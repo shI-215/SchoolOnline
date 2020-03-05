@@ -3,14 +3,14 @@ package com.zijing.schoolonline.presenter;
 import com.zijing.schoolonline.callback.MainCallback;
 import com.zijing.schoolonline.model.UserModel;
 import com.zijing.schoolonline.model.UserModelImpl;
-import com.zijing.schoolonline.view.MainView;
+import com.zijing.schoolonline.view.MainListening;
 
 public class MainPresenterImpl implements MainPresenter, MainCallback<Object> {
-    private MainView mainView;
+    private MainListening mainListening;
     private UserModel userModel;
 
-    public MainPresenterImpl(MainView mainView) {
-        this.mainView = mainView;
+    public MainPresenterImpl(MainListening mainListening) {
+        this.mainListening = mainListening;
         this.userModel = new UserModelImpl();
     }
 
@@ -21,27 +21,27 @@ public class MainPresenterImpl implements MainPresenter, MainCallback<Object> {
 
     @Override
     public void onSuccess(Object object) {
-        if (mainView != null) {
-            mainView.onSuccess(object);
+        if (mainListening != null) {
+            mainListening.onSuccess(object);
         }
     }
 
     @Override
     public void onFailed(Object object) {
-        if (mainView != null) {
-            mainView.onFailed(object);
+        if (mainListening != null) {
+            mainListening.onFailed(object);
         }
     }
 
     @Override
     public void onError(Object object) {
-        if (mainView != null) {
-            mainView.onError(object);
+        if (mainListening != null) {
+            mainListening.onError(object);
         }
     }
 
     @Override
     public void onDestroy() {
-        mainView = null;
+        mainListening = null;
     }
 }

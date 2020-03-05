@@ -41,7 +41,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         @Override
         public void onFinish() {
-            SharedPreferences preferences = context.getSharedPreferences(ApplicationParam.SP_NAME, context.MODE_PRIVATE);
+            SharedPreferences preferences = context.getSharedPreferences(App.SP_NAME, context.MODE_PRIVATE);
             String name = preferences.getString("name", "");
             //判断用户是否登录
             if (TextUtils.isEmpty(name)) {

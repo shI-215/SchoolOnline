@@ -2,7 +2,7 @@ package com.zijing.schoolonline.view;
 
 import java.util.List;
 
-public interface ListView {
+public interface ListListening {
     void onSuccess(List<Object> list);
 
     void onFailed();

@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.zijing.schoolonline.ApplicationParam;
+import com.zijing.schoolonline.App;
 import com.zijing.schoolonline.R;
 import com.zijing.schoolonline.adapter.RechargeAdapter;
 import com.zijing.schoolonline.bean.Air;
@@ -24,15 +24,15 @@ import com.zijing.schoolonline.bean.Water;
 import com.zijing.schoolonline.presenter.MyPresenter;
 import com.zijing.schoolonline.presenter.MyPresenterImpl;
 import com.zijing.schoolonline.util.ToastUtil;
-import com.zijing.schoolonline.view.MyView;
+import com.zijing.schoolonline.view.MyListening;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RechargeActivity extends AppCompatActivity implements View.OnClickListener, MyView {
+public class RechargeActivity extends AppCompatActivity implements View.OnClickListener, MyListening {
 
-    private SharedPreferences preferences = ApplicationParam.myContext.getSharedPreferences(ApplicationParam.SP_NAME,
-            ApplicationParam.myContext.MODE_PRIVATE);
+    private SharedPreferences preferences = App.myContext.getSharedPreferences(App.SP_NAME,
+            App.myContext.MODE_PRIVATE);
     private MyPresenter myPresenter;
     private Context context;
     private RechargeAdapter rechargeAdapter;
@@ -77,7 +77,7 @@ public class RechargeActivity extends AppCompatActivity implements View.OnClickL
 
     private void initTitle() {
         if (titleRecharge == 1) {
-            setTitle(ApplicationParam.AIR_RECHARGE_VALUE);
+            setTitle(App.AIR_RECHARGE_VALUE);
             new Thread() {
                 @Override
                 public void run() {
@@ -88,7 +88,7 @@ public class RechargeActivity extends AppCompatActivity implements View.OnClickL
                 }
             }.start();
         } else if (titleRecharge == 2) {
-            setTitle(ApplicationParam.ELECT_RECHARGE_VALUE);
+            setTitle(App.ELECT_RECHARGE_VALUE);
             new Thread() {
                 @Override
                 public void run() {
@@ -98,7 +98,7 @@ public class RechargeActivity extends AppCompatActivity implements View.OnClickL
                 }
             }.start();
         } else if (titleRecharge == 3) {
-            setTitle(ApplicationParam.WATER_RECHARGE_VALUE);
+            setTitle(App.WATER_RECHARGE_VALUE);
             new Thread() {
                 @Override
                 public void run() {

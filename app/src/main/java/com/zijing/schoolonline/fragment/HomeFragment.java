@@ -19,16 +19,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import com.zijing.schoolonline.ApplicationParam;
+import com.zijing.schoolonline.App;
 import com.zijing.schoolonline.R;
+import com.zijing.schoolonline.UpdateDate;
 import com.zijing.schoolonline.activity.RechargeActivity;
 import com.zijing.schoolonline.activity.RecordActivity;
 import com.zijing.schoolonline.layout.CardLayout;
 
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class HomeFragment extends Fragment implements View.OnClickListener, UpdateDate {
 
-    private SharedPreferences preferences = ApplicationParam.myContext.getSharedPreferences(ApplicationParam.SP_NAME,
-            ApplicationParam.myContext.MODE_PRIVATE);
+    private SharedPreferences preferences = App.myContext.getSharedPreferences(App.SP_NAME,
+            App.myContext.MODE_PRIVATE);
 
     private CardLayout cl_air;
     private CardLayout cl_elect;
@@ -108,5 +109,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void update() {
+        initView();
     }
 }

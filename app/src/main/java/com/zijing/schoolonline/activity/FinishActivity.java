@@ -16,15 +16,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.zijing.schoolonline.ApplicationParam;
+import com.zijing.schoolonline.App;
 import com.zijing.schoolonline.R;
 import com.zijing.schoolonline.presenter.UserPresenter;
 import com.zijing.schoolonline.presenter.UserPresenterImpl;
 import com.zijing.schoolonline.util.RegexUtil;
 import com.zijing.schoolonline.util.ToastUtil;
-import com.zijing.schoolonline.view.MyView;
+import com.zijing.schoolonline.view.MyListening;
 
-public class FinishActivity extends AppCompatActivity implements View.OnClickListener, MyView {
+public class FinishActivity extends AppCompatActivity implements View.OnClickListener, MyListening {
 
     private UserPresenter userPresenter;
     private Context context;
@@ -48,9 +48,9 @@ public class FinishActivity extends AppCompatActivity implements View.OnClickLis
         titleType = getIntent().getIntExtra("titleType", 0);
         phone = getIntent().getStringExtra("phone");
         if (titleType == 1) {
-            setTitle(ApplicationParam.REGISTER_VALUE);
+            setTitle(App.REGISTER_VALUE);
         } else if (titleType == 2) {
-            setTitle(ApplicationParam.FINDV_ALUE);
+            setTitle(App.FINDV_ALUE);
         }
         context = this;
         userPresenter = new UserPresenterImpl(this);

@@ -19,11 +19,11 @@ import com.zijing.schoolonline.MainActivity;
 import com.zijing.schoolonline.R;
 import com.zijing.schoolonline.presenter.ListPresenter;
 import com.zijing.schoolonline.presenter.ListPresenterImpl;
-import com.zijing.schoolonline.view.ListView;
+import com.zijing.schoolonline.view.ListListening;
 
 import java.util.List;
 
-public class RoomActivity extends AppCompatActivity implements View.OnClickListener, ListView {
+public class RoomActivity extends AppCompatActivity implements View.OnClickListener, ListListening {
 
     private ListPresenter listPresenter;
     private Context context;

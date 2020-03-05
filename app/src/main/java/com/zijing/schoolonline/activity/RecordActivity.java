@@ -18,12 +18,12 @@ import com.zijing.schoolonline.bean.Recharge;
 import com.zijing.schoolonline.presenter.MyPresenter;
 import com.zijing.schoolonline.presenter.MyPresenterImpl;
 import com.zijing.schoolonline.util.ToastUtil;
-import com.zijing.schoolonline.view.MyView;
+import com.zijing.schoolonline.view.MyListening;
 
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class RecordActivity extends AppCompatActivity implements MyView {
+public class RecordActivity extends AppCompatActivity implements MyListening {
 
     private List<Recharge> recharges;
     private MyPresenter myPresenter;

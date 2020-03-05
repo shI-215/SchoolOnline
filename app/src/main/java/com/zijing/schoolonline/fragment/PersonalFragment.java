@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,11 +16,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.ogh.library.photos.IPhotoResult;
 import com.ogh.library.photos.TakePhotoDialog;
-import com.zijing.schoolonline.ApplicationParam;
+import com.zijing.schoolonline.App;
 import com.zijing.schoolonline.MainActivity;
 import com.zijing.schoolonline.R;
+import com.zijing.schoolonline.UpdateDate;
 import com.zijing.schoolonline.activity.LoginActivity;
 import com.zijing.schoolonline.activity.NextActivity;
 import com.zijing.schoolonline.activity.RoomActivity;
@@ -33,21 +34,21 @@ import com.zijing.schoolonline.presenter.UserPresenterImpl;
 import com.zijing.schoolonline.util.SharedPreferencesUtil;
 import com.zijing.schoolonline.util.ToastUtil;
 import com.zijing.schoolonline.util.VersionCodeUtil;
-import com.zijing.schoolonline.view.MyView;
+import com.zijing.schoolonline.view.MyListening;
 import com.zijing.schoolonline.view.PictureListening;
 
 import java.io.File;
 
-public class PersonalFragment extends Fragment implements View.OnClickListener, MyView, PictureListening {
+public class PersonalFragment extends Fragment implements View.OnClickListener, MyListening, PictureListening, UpdateDate {
 
-    private SharedPreferences preferences = ApplicationParam.myContext.getSharedPreferences(ApplicationParam.SP_NAME,
-            ApplicationParam.myContext.MODE_PRIVATE);
+    private SharedPreferences preferences = App.myContext.getSharedPreferences(App.SP_NAME,
+            App.myContext.MODE_PRIVATE);
     private UserPresenter userPresenter;
     private PicturePresenter picturePresenter;
     private TakePhotoDialog takePhotoDialog;
     private String phone;
 
-    private ImageView iv_user_image;
+    private RoundedImageView iv_user_image;
     private TextView tv_user_name;
     private TextView tv_user_signature;
     private ClickLayout cl_phone;
@@ -70,7 +71,7 @@ public class PersonalFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void initView() {
-        iv_user_image = (ImageView) getActivity().findViewById(R.id.iv_user_image);
+        iv_user_image = (RoundedImageView) getActivity().findViewById(R.id.iv_user_image);
         iv_user_image.setOnClickListener(this);
         tv_user_name = (TextView) getActivity().findViewById(R.id.tv_user_name);
         tv_user_signature = (TextView) getActivity().findViewById(R.id.tv_user_signature);
@@ -84,8 +85,10 @@ public class PersonalFragment extends Fragment implements View.OnClickListener, 
 
         String picture = preferences.getString("picture", "");
         Log.v("picture", picture);
-        Glide.with(getContext()).load(ApplicationParam.SCHOOL_URL + picture)
-                .error(R.drawable.picture).into(iv_user_image);
+        if (!TextUtils.isEmpty(picture)) {
+            Glide.with(getContext()).load(App.SCHOOL_URL + picture)
+                    .error(R.drawable.picture).into(iv_user_image);
+        }
         String name = preferences.getString("name", "");
         phone = preferences.getString("phone", "");
         String room = preferences.getString("room", "");
@@ -157,8 +160,7 @@ public class PersonalFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onSuccess(String string) {
-        String path = ApplicationParam.SCHOOL_URL + string;
-        Log.v("PersonalFragment------>", path);
+        String path = App.SCHOOL_URL + string;
         Glide.with(getContext()).load(path)
                 .error(R.drawable.picture)
                 .into(iv_user_image);
@@ -167,5 +169,17 @@ public class PersonalFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onFailed(String string) {
         ToastUtil.l(string);
+    }
+
+    @Override
+    public void update() {
+        initView();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        userPresenter.onDestroy();
+        picturePresenter.onDestroy();
     }
 }

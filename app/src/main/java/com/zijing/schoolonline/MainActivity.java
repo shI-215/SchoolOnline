@@ -17,17 +17,19 @@ import com.zijing.schoolonline.fragment.PersonalFragment;
 import com.zijing.schoolonline.presenter.MainPresenter;
 import com.zijing.schoolonline.presenter.MainPresenterImpl;
 import com.zijing.schoolonline.util.ToastUtil;
-import com.zijing.schoolonline.view.MainView;
+import com.zijing.schoolonline.view.MainListening;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements MainView {
+public class MainActivity extends AppCompatActivity implements MainListening {
 
     public static AppCompatActivity compatActivity;
     private List<Fragment> mFragments;
-    private Context context;
+    private PersonalFragment personalFragment;
+    private HomeFragment homeFragment;
     private MainPresenter mainPresenter;
+    private Context context;
 
     private ViewPager vp_main_page;
 
@@ -46,8 +48,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
         vp_main_page = (ViewPager) findViewById(R.id.vp_main_page);
 
         mFragments = new ArrayList<>();
-        PersonalFragment personalFragment = new PersonalFragment();
-        HomeFragment homeFragment = new HomeFragment();
+        personalFragment = new PersonalFragment();
+        homeFragment = new HomeFragment();
         mFragments.add(personalFragment);
         mFragments.add(homeFragment);
 
@@ -58,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @Override
     public void onSuccess(Object object) {
+        personalFragment.update();
+        homeFragment.update();
         Log.v("get", object.toString());
     }
 
@@ -68,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @Override
     public void onError(Object object) {
-        SharedPreferences preferences = context.getSharedPreferences(ApplicationParam.SP_NAME, context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences(App.SP_NAME, context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.commit();

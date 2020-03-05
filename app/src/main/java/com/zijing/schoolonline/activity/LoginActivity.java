@@ -17,9 +17,9 @@ import com.zijing.schoolonline.R;
 import com.zijing.schoolonline.presenter.UserPresenter;
 import com.zijing.schoolonline.presenter.UserPresenterImpl;
 import com.zijing.schoolonline.util.ToastUtil;
-import com.zijing.schoolonline.view.MyView;
+import com.zijing.schoolonline.view.MyListening;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, MyView {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, MyListening {
 
     private Context context;
     private UserPresenter userPresenter;

@@ -7,7 +7,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.cookie.CookieJarImpl;
-import com.zijing.schoolonline.ApplicationParam;
+import com.zijing.schoolonline.App;
 import com.zijing.schoolonline.bean.Message;
 import com.zijing.schoolonline.bean.User;
 import com.zijing.schoolonline.callback.MainCallback;
@@ -22,19 +22,19 @@ import okhttp3.MediaType;
 
 public class UserModelImpl implements UserModel {
 
-    private SharedPreferences preferences = ApplicationParam.myContext.getSharedPreferences(ApplicationParam.SP_NAME, Context.MODE_PRIVATE);
+    private SharedPreferences preferences = App.myContext.getSharedPreferences(App.SP_NAME, Context.MODE_PRIVATE);
     private SharedPreferences.Editor editor = preferences.edit();
     private User user = new User();
 
     @Override
     public void userLoginData(String phone, String pwd, final MyCallback myCallback) {
-        OkHttpUtils.post().url(ApplicationParam.USER_LOGIN_API)
+        OkHttpUtils.post().url(App.USER_LOGIN_API)
                 .addParams("userPhone", phone)
                 .addParams("userPassword", pwd)
                 .build().execute(new MessageCallback() {
             @Override
             public void onResponse(Message message, int id) {
-                if (message.getStatus() == ApplicationParam.STATUS_SUCCESS) {
+                if (message.getStatus() == App.STATUS_SUCCESS) {
                     myCallback.onSuccess(message.getData());
                 } else {
                     myCallback.onFailed(message.getData());
@@ -48,15 +48,15 @@ public class UserModelImpl implements UserModel {
         user.setUserPhone(phone);
         user.setUserPassword(pwd);
         Log.v("userRegisterData: user", user.toString());
-        OkHttpUtils.postString().url(ApplicationParam.USER_REGISTER_API)
+        OkHttpUtils.postString().url(App.USER_REGISTER_API)
                 .content(new Gson().toJson(user))
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build().execute(new MessageCallback() {
             @Override
             public void onResponse(Message message, int id) {
-                if (message.getStatus() == ApplicationParam.STATUS_FAILED) {
+                if (message.getStatus() == App.STATUS_FAILED) {
                     myCallback.onFailed(message.getData());
-                } else if (message.getStatus() == ApplicationParam.STATUS_SUCCESS) {
+                } else if (message.getStatus() == App.STATUS_SUCCESS) {
                     myCallback.onSuccess(message.getData());
                 }
             }
@@ -69,15 +69,15 @@ public class UserModelImpl implements UserModel {
         user.setUserPhone(phone);
         user.setUserPassword(pwd);
         Log.v("userRegisterData: user", user.toString());
-        OkHttpUtils.postString().url(ApplicationParam.USER_FIND_API)
+        OkHttpUtils.postString().url(App.USER_FIND_API)
                 .content(new Gson().toJson(user))
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build().execute(new MessageCallback() {
             @Override
             public void onResponse(Message message, int id) {
-                if (message.getStatus() == ApplicationParam.STATUS_FAILED) {
+                if (message.getStatus() == App.STATUS_FAILED) {
                     myCallback.onFailed(message.getData());
-                } else if (message.getStatus() == ApplicationParam.STATUS_SUCCESS) {
+                } else if (message.getStatus() == App.STATUS_SUCCESS) {
                     myCallback.onSuccess(message.getData());
                 }
             }
@@ -86,17 +86,16 @@ public class UserModelImpl implements UserModel {
 
     @Override
     public void getUserInfoData(final MainCallback mainCallback) {
-        OkHttpUtils.get().url(ApplicationParam.USER_GETUSER_API)
+        OkHttpUtils.get().url(App.USER_GETUSER_API)
                 .build().execute(new MessageCallback() {
             @Override
             public void onResponse(Message message, int id) {
-                if (message.getStatus() == ApplicationParam.STATUS_SUCCESS) {
+                if (message.getStatus() == App.STATUS_SUCCESS) {
                     User user = new Gson().fromJson(message.getData(), User.class);
                     Log.v("getUser", user.toString());
                     editor.putString("name", user.getUserName());
                     editor.putString("phone", user.getUserPhone());
                     editor.putString("autograph", user.getUserAutograph());
-                    Log.v("UserPicture", user.getUserPicture());
                     if (null != user.getUserPicture()) {
                         editor.putString("picture", user.getUserPicture());
                     } else {
@@ -118,7 +117,7 @@ public class UserModelImpl implements UserModel {
                     }
                     editor.commit();
                     mainCallback.onSuccess(message.getData());
-                } else if (message.getStatus() == ApplicationParam.STATUS_FAILED) {
+                } else if (message.getStatus() == App.STATUS_FAILED) {
                     mainCallback.onFailed(message.getData());
                 } else {
                     mainCallback.onError("登录失效，请重新登录");
@@ -129,13 +128,13 @@ public class UserModelImpl implements UserModel {
 
     @Override
     public void userLogOutData(final MyCallback myCallback) {
-        OkHttpUtils.get().url(ApplicationParam.USER_LOGOUT_API)
+        OkHttpUtils.get().url(App.USER_LOGOUT_API)
                 .build().execute(new MessageCallback() {
             @Override
             public void onResponse(Message message, int id) {
-                if (message.getStatus() == ApplicationParam.STATUS_FAILED) {
+                if (message.getStatus() == App.STATUS_FAILED) {
                     myCallback.onFailed(message);
-                } else if (message.getStatus() == ApplicationParam.STATUS_SUCCESS) {//清空session
+                } else if (message.getStatus() == App.STATUS_SUCCESS) {//清空session
                     CookieJar cookieJar = OkHttpUtils.getInstance().getOkHttpClient().cookieJar();
                     if (cookieJar instanceof CookieJarImpl) {
                         ((CookieJarImpl) cookieJar).getCookieStore().removeAll();
@@ -149,15 +148,15 @@ public class UserModelImpl implements UserModel {
     @Override
     public void alterPhoneData(String phone, final MyCallback myCallback) {
         user.setUserPhone(phone);
-        OkHttpUtils.postString().url(ApplicationParam.USER_ALTERPHONE_API)
+        OkHttpUtils.postString().url(App.USER_ALTERPHONE_API)
                 .content(new Gson().toJson(user))
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build().execute(new MessageCallback() {
             @Override
             public void onResponse(Message message, int id) {
-                if (message.getStatus() == ApplicationParam.STATUS_FAILED) {
+                if (message.getStatus() == App.STATUS_FAILED) {
                     myCallback.onFailed(message.getData());
-                } else if (message.getStatus() == ApplicationParam.STATUS_SUCCESS) {
+                } else if (message.getStatus() == App.STATUS_SUCCESS) {
                     myCallback.onSuccess(message.getData());
                 }
             }
@@ -168,14 +167,14 @@ public class UserModelImpl implements UserModel {
     public void alterPictureData(File file, final PictureListening pictureListening) {
         OkHttpUtils.post()
                 .addFile("image", file.getName(), file)//图片
-                .url(ApplicationParam.USER_IMAGE_API)
+                .url(App.USER_IMAGE_API)
                 .build()
                 .execute(new MessageCallback() {
                     @Override
                     public void onResponse(Message message, int id) {
-                        if (message.getStatus() == ApplicationParam.STATUS_FAILED) {
+                        if (message.getStatus() == App.STATUS_FAILED) {
                             pictureListening.onFailed(message.getData());
-                        } else if (message.getStatus() == ApplicationParam.STATUS_SUCCESS) {
+                        } else if (message.getStatus() == App.STATUS_SUCCESS) {
                             pictureListening.onSuccess(message.getData());
                         }
                     }

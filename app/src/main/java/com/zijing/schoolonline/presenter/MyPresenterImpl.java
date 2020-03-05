@@ -3,14 +3,14 @@ package com.zijing.schoolonline.presenter;
 import com.zijing.schoolonline.callback.MyCallback;
 import com.zijing.schoolonline.model.MyModel;
 import com.zijing.schoolonline.model.MyModelImpl;
-import com.zijing.schoolonline.view.MyView;
+import com.zijing.schoolonline.view.MyListening;
 
 public class MyPresenterImpl implements MyPresenter, MyCallback<Object> {
-    private MyView myView;
+    private MyListening myListening;
     private MyModel myModel;
 
-    public MyPresenterImpl(MyView myView) {
-        this.myView = myView;
+    public MyPresenterImpl(MyListening myListening) {
+        this.myListening = myListening;
         this.myModel = new MyModelImpl();
     }
 
@@ -51,20 +51,20 @@ public class MyPresenterImpl implements MyPresenter, MyCallback<Object> {
 
     @Override
     public void onSuccess(Object object) {
-        if (myView != null) {
-            myView.onSuccess(object);
+        if (myListening != null) {
+            myListening.onSuccess(object);
         }
     }
 
     @Override
     public void onFailed(Object object) {
-        if (myView != null) {
-            myView.onFailed(object);
+        if (myListening != null) {
+            myListening.onFailed(object);
         }
     }
 
     @Override
     public void onDestroy() {
-        myView = null;
+        myListening = null;
     }
 }

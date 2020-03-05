@@ -1,6 +1,6 @@
 package com.zijing.schoolonline.view;
 
-public interface MainView {
+public interface MainListening {
     //    成功
     void onSuccess(Object object);
 

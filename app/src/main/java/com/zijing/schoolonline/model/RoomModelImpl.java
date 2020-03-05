@@ -5,7 +5,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zhy.http.okhttp.OkHttpUtils;
-import com.zijing.schoolonline.ApplicationParam;
+import com.zijing.schoolonline.App;
 import com.zijing.schoolonline.bean.Message;
 import com.zijing.schoolonline.bean.Room;
 import com.zijing.schoolonline.callback.ListCallBack;
@@ -20,7 +20,7 @@ public class RoomModelImpl implements RoomModel {
 
     @Override
     public void getRoomAreaData(final ListCallBack listCallBack) {
-        OkHttpUtils.get().url(ApplicationParam.ROOM_GETAREA_API).build()
+        OkHttpUtils.get().url(App.ROOM_GETAREA_API).build()
                 .execute(new MessageCallback() {
                     @Override
                     public void onResponse(Message message, int id) {
@@ -34,7 +34,7 @@ public class RoomModelImpl implements RoomModel {
 
     @Override
     public void getRoomDoorplateData(String area, final ListCallBack listCallBack) {
-        OkHttpUtils.get().url(ApplicationParam.ROOM_GETDOORPLATE_API)
+        OkHttpUtils.get().url(App.ROOM_GETDOORPLATE_API)
                 .addParams("roomArea", area)
                 .build()
                 .execute(new MessageCallback() {
@@ -50,14 +50,14 @@ public class RoomModelImpl implements RoomModel {
 
     @Override
     public void bindingRoomData(String area, String doorplate, final ListCallBack listCallBack) {
-        OkHttpUtils.get().url(ApplicationParam.USER_BINDINGROOM_API)
+        OkHttpUtils.get().url(App.USER_BINDINGROOM_API)
                 .addParams("roomArea", area)
                 .addParams("roomDoorplate", doorplate)
                 .build()
                 .execute(new MessageCallback() {
                     @Override
                     public void onResponse(Message message, int id) {
-                        if (message.getStatus() == ApplicationParam.STATUS_SUCCESS) {
+                        if (message.getStatus() == App.STATUS_SUCCESS) {
                             List<Object> list = new ArrayList<>();
                             listCallBack.onSuccess(list);
                         } else {
@@ -70,13 +70,13 @@ public class RoomModelImpl implements RoomModel {
     @Override
     public void getRoomInfo(int roomId, final RoomCallBack roomCallBack) {
         Log.v("userModel", roomId + "");
-        OkHttpUtils.get().url(ApplicationParam.ROOM_GETROOMINFO_API)
+        OkHttpUtils.get().url(App.ROOM_GETROOMINFO_API)
                 .addParams("roomId", roomId + "")
                 .build()
                 .execute(new MessageCallback() {
                     @Override
                     public void onResponse(Message message, int id) {
-                        if (message.getStatus() == ApplicationParam.STATUS_SUCCESS) {
+                        if (message.getStatus() == App.STATUS_SUCCESS) {
                             Log.v("room", message.getData());
                             Room room = new Gson().fromJson(message.getData(), Room.class);
                             Log.v("room", room.toString());

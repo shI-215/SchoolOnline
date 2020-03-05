@@ -14,13 +14,13 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 
-public class ApplicationParam extends Application {
+public class App extends Application {
 
     public static final int STATUS_SUCCESS = 0;
     public static final int STATUS_FAILED = 200;
     public static final int STATUS_ERROR = 400;
 
-    public static ApplicationParam myContext;
+    public static App myContext;
     public static String SP_NAME = "user";
 
     public static final String REGISTER_VALUE = "注册";
@@ -47,8 +47,6 @@ public class ApplicationParam extends Application {
     public static final String USER_BINDINGROOM_API = SCHOOL_URL + "/user/bindingRoom";
     //修改用户头像
     public static final String USER_IMAGE_API = SCHOOL_URL + "/user/alterUserPicture";
-    //加载用户头像
-    public static final String USER_GET_IMAGE_API = SCHOOL_URL + "/user/alterUserPicture";
     //    宿舍
     public static final String ROOM_GETAREA_API = SCHOOL_URL + "/room/selectRoomArea";
     public static final String ROOM_GETDOORPLATE_API = SCHOOL_URL + "/room/selectRoomDoorplate";

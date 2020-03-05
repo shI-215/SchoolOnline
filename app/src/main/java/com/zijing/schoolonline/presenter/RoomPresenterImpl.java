@@ -4,34 +4,34 @@ import com.zijing.schoolonline.bean.Room;
 import com.zijing.schoolonline.callback.RoomCallBack;
 import com.zijing.schoolonline.model.RoomModel;
 import com.zijing.schoolonline.model.RoomModelImpl;
-import com.zijing.schoolonline.view.RoomView;
+import com.zijing.schoolonline.view.RoomListening;
 
 public class RoomPresenterImpl implements RoomPresenter, RoomCallBack {
-    private RoomView roomView;
+    private RoomListening roomListening;
     private RoomModel roomModel;
 
-    public RoomPresenterImpl(RoomView roomView) {
-        this.roomView = roomView;
+    public RoomPresenterImpl(RoomListening roomListening) {
+        this.roomListening = roomListening;
         this.roomModel = new RoomModelImpl();
     }
 
     @Override
     public void onSuccess(Room room) {
-        if (roomView != null) {
-            roomView.onSuccess(room);
+        if (roomListening != null) {
+            roomListening.onSuccess(room);
         }
     }
 
     @Override
     public void onFailed() {
-        if (roomView != null) {
-            roomView.onFailed();
+        if (roomListening != null) {
+            roomListening.onFailed();
         }
     }
 
     @Override
     public void onDestroy() {
-        roomView = null;
+        roomListening = null;
     }
 
     @Override

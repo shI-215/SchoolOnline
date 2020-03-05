@@ -22,22 +22,22 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.zijing.schoolonline.ApplicationParam;
+import com.zijing.schoolonline.App;
 import com.zijing.schoolonline.MainActivity;
 import com.zijing.schoolonline.R;
 import com.zijing.schoolonline.presenter.UserPresenter;
 import com.zijing.schoolonline.presenter.UserPresenterImpl;
 import com.zijing.schoolonline.util.RegexUtil;
 import com.zijing.schoolonline.util.ToastUtil;
-import com.zijing.schoolonline.view.MyView;
+import com.zijing.schoolonline.view.MyListening;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
-public class NextActivity extends AppCompatActivity implements View.OnClickListener, MyView {
+public class NextActivity extends AppCompatActivity implements View.OnClickListener, MyListening {
 
-    private SharedPreferences preferences = ApplicationParam.myContext.getSharedPreferences(ApplicationParam.SP_NAME,
-            ApplicationParam.myContext.MODE_PRIVATE);
+    private SharedPreferences preferences = App.myContext.getSharedPreferences(App.SP_NAME,
+            App.myContext.MODE_PRIVATE);
     private UserPresenter userPresenter;
     public static AppCompatActivity activity;
     private Context context;
@@ -63,9 +63,9 @@ public class NextActivity extends AppCompatActivity implements View.OnClickListe
         titleType = getIntent().getIntExtra("titleType", 0);
         updatePhone = getIntent().getIntExtra("updatePhone", 0);
         if (titleType == 1) {
-            setTitle(ApplicationParam.REGISTER_VALUE);
+            setTitle(App.REGISTER_VALUE);
         } else if (titleType == 2) {
-            setTitle(ApplicationParam.FINDV_ALUE);
+            setTitle(App.FINDV_ALUE);
         }
         // 注册一个事件回调，用于处理SMSSDK接口请求的结果
         SMSSDK.registerEventHandler(eventHandler);
@@ -129,7 +129,7 @@ public class NextActivity extends AppCompatActivity implements View.OnClickListe
                 return;
             }
         }
-        SMSSDK.getVerificationCode(ApplicationParam.MOB_COUNTRY, phone);
+        SMSSDK.getVerificationCode(App.MOB_COUNTRY, phone);
     }
 
     private void submit() {
@@ -153,7 +153,7 @@ public class NextActivity extends AppCompatActivity implements View.OnClickListe
 
         // TODO validate success, do something
 
-        SMSSDK.submitVerificationCode(ApplicationParam.MOB_COUNTRY, phone, code);
+        SMSSDK.submitVerificationCode(App.MOB_COUNTRY, phone, code);
     }
 
     EventHandler eventHandler = new EventHandler() {
