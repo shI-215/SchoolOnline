@@ -34,8 +34,8 @@ public class App extends Application {
     public static final String MOB_COUNTRY = "86";
 
     //    URL
-    public static final String SCHOOL_URL = "http://192.168.43.196:8080/School";//开发版
-//    public static final String SCHOOL_URL = "http://106.12.118.56:20200/School";//生产版
+//    public static final String SCHOOL_URL = "http://192.168.43.196:8080/School";//开发版
+    public static final String SCHOOL_URL = "http://www.48days.top/School";//生产版
 
     //    用户
     public static final String USER_LOGIN_API = SCHOOL_URL + "/user/userLogin";
